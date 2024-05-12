@@ -6,8 +6,12 @@
 typedef enum s_state {
 	ARRIVED,
 	LOADED,
-	UNLOADED,
-	FINISHED
+	STARTED,
+	FINISHED,
+	READY,
+	WAITING,
+	RUNNING,
+	TERMINATED
 } t_state;
 
 typedef struct s_fcfs {
@@ -23,7 +27,7 @@ typedef struct s_fcfs {
 
 void scheduler(t_setting *setting, t_process *processes, int mode);
 void join_threads(t_setting *setting, t_process *processes);
-
+void printer(t_process *p, t_state state);
 // cycle.c
 void	*cycle(void *arg);
 // fcfs.c

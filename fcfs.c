@@ -1,7 +1,10 @@
 #include "scheduling.h"
 #include "init.h"
+#include <pthread.h>
 #include <sys/wait.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <stdio.h>
 
 t_fcfs	*init_fcfs(t_setting *set) {
 	t_fcfs	*fcfs;
@@ -22,7 +25,7 @@ t_fcfs	*init_fcfs(t_setting *set) {
 	return fcfs;
 }
 
-void	wait_starting(t_setting *set) {
+static void	wait_starting(t_setting *set) {
 	while (1) {
 		pthread_mutex_lock(set->mutex_list->cpu);
 		if (set->values->thread_count == 0) {
@@ -47,36 +50,82 @@ void	*fcfs(void *arg) {
 		// error
 		return NULL;
 	}
+
+	wait_starting(set);
+
 	while (fcfs->counter < set->total_process_count) {
 		pthread_mutex_lock(set->mutex_list->ready_queue);
 		ready_queue = set->values->ready_queue;
-		if (ready_queue->next != NULL)
+		if (ready_queue->next != NULL) {
 			temp = ready_queue->next;
-		id = temp->id;
-		burst_time = temp->burst_time;
-		if (temp->next != NULL)
+			id = temp->id;
+			burst_time = temp->burst_time;
+
 			ready_queue->next = temp->next;
-		else
-			ready_queue->next = NULL;
-		free(temp);
+			free(temp);
+		} else {
+			pthread_mutex_unlock(set->mutex_list->ready_queue);
+			continue;
+		}
 		pthread_mutex_unlock(set->mutex_list->ready_queue);
+
 		pthread_mutex_lock(set->mutex_list->cpu);
 		set->values->process_on_cpu = id;
 		pthread_mutex_unlock(set->mutex_list->cpu);
+
+		//print
+		pthread_mutex_lock(set->mutex_list->p);
+		printf("%d : %d loaded on cpu\n", set->values->time, id);
+		pthread_mutex_unlock(set->mutex_list->p);
+
 		for (int i = 0; i < burst_time; i++) {
 			pthread_mutex_lock(set->mutex_list->t);
 			set->values->time++;
 			pthread_mutex_unlock(set->mutex_list->t);
+			sleep(1);
 		}
+
 		pthread_mutex_lock(set->mutex_list->cpu);
 		set->values->process_on_cpu = -1;
 		pthread_mutex_unlock(set->mutex_list->cpu);
+
+		//print
+		pthread_mutex_lock(set->mutex_list->p);
+		printf("%d : %d finished\n", set->values->time, id);
+		pthread_mutex_unlock(set->mutex_list->p);
+
+		fcfs->counter++;
+
+		// id = temp->id;
+		// burst_time = temp->burst_time;
+		// if (temp->next != NULL)
+		// 	ready_queue->next = temp->next;
+		// else
+		// 	ready_queue->next = NULL;
+		// free(temp);
+		// pthread_mutex_unlock(set->mutex_list->ready_queue);
+		// pthread_mutex_lock(set->mutex_list->cpu);
+		// set->values->process_on_cpu = id;
+		// pthread_mutex_unlock(set->mutex_list->cpu);
+		// for (int i = 0; i < burst_time; i++) {
+		// 	pthread_mutex_lock(set->mutex_list->t);
+		// 	set->values->time++;
+		// 	pthread_mutex_unlock(set->mutex_list->t);
+		// }
+		// pthread_mutex_lock(set->mutex_list->cpu);
+		// set->values->process_on_cpu = -1;
+		// pthread_mutex_unlock(set->mutex_list->cpu);
 	}
 
-
-
-	wait_starting(set);
-
+	// free(fcfs);
+	// print
+	pthread_mutex_lock(set->mutex_list->p);
+	printf("fcfs done\n");
+	printf("total_waiting_time : %d\n", fcfs->total_waiting_time);
+	printf("total_turnaround_time : %d\n", fcfs->total_turnaround_time);
+	printf("avg_waiting_time : %f\n", fcfs->avg_waiting_time);
+	printf("avg_turnaround_time : %f\n", fcfs->avg_turnaround_time);
+	pthread_mutex_unlock(set->mutex_list->p);
 
 	return (0);
 }

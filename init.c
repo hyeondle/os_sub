@@ -4,6 +4,7 @@
 #include <string.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <stdio.h>
 
 t_process *new_process(char *buffer, t_setting *setting) {
 	t_process *process;
@@ -102,7 +103,7 @@ t_setting	*init_setting(char **argv, t_process *processes, int *mode) {
 	if (setting == NULL)
 		return NULL;
 
-	buffer = (char *)malloc(100);
+	buffer = (char *)malloc(100 * sizeof(char));
 	if (buffer == NULL) {
 		free(setting);
 		return NULL;

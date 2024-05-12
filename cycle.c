@@ -1,6 +1,7 @@
 #include "scheduling.h"
 #include "init.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 void	process_entered(t_process *process) {
 	pthread_mutex_lock(process->mutex_list->t);
@@ -8,7 +9,7 @@ void	process_entered(t_process *process) {
 	pthread_mutex_unlock(process->mutex_list->t);
 }
 
-void	wait_starting(t_process *process) {
+static void	wait_starting(t_process *process) {
 	process_entered(process);
 	while(1) {
 		pthread_mutex_lock(process->mutex_list->cpu);
@@ -37,13 +38,17 @@ void arrival(t_process *process) {
 	new->arrival_time = process->arrival_time;
 	new->remaining_time = process->burst_time;
 	new->next = NULL;
+
 	pthread_mutex_lock(process->mutex_list->ready_queue);
+	temp = process->values->ready_queue;
 	while (temp->next != NULL) {
 		temp = temp->next;
 	}
 	temp->next = new;
 	pthread_mutex_unlock(process->mutex_list->ready_queue);
+
 	process->submitted = TRUE;
+	printer(process, ARRIVED);
 }
 
 void	before_submit(t_process *p, int *time) {
@@ -51,7 +56,7 @@ void	before_submit(t_process *p, int *time) {
 		time_check(p, time);
 		if (*time == p->arrival_time && p->submitted == FALSE) {
 			arrival(p);
-			printer(p, READY);
+			// printer(p, READY);
 			break;
 		}
 	}
@@ -60,23 +65,22 @@ void	before_submit(t_process *p, int *time) {
 void	*cycle(void *arg) {
 	t_process *p;
 	p = (t_process *)arg;
-	int time;
-	int time2;
-	int response_time;
+	int time = 0;
+	int response_time = -1;
 	int turnaround_time;
 
-	time = 0;
+	printf("process id: %d\n", p->id);
+
 	wait_starting(p);
 	before_submit(p, &time);
-	time2 = time;
+
 	while (1) {
 		if (p->remaining_time == 0) {
 			// printer(p, FINISHED);
 			turnaround_time = time - p->arrival_time;
 			break;
 		}
-		while (time > time2)
-			time_check(p, &time2);
+
 		pthread_mutex_lock(p->mutex_list->cpu);
 		if (p->values->process_on_cpu == p->id) {
 			if (response_time == -1) {
@@ -87,7 +91,12 @@ void	*cycle(void *arg) {
 			p->waiting_time++;
 		}
 		pthread_mutex_unlock(p->mutex_list->cpu);
+
+		pthread_mutex_lock(p->mutex_list->t);
+		time = p->values->time;
+		pthread_mutex_unlock(p->mutex_list->t);
 	}
+	printer(p, TERMINATED);
 	pthread_mutex_lock(p->mutex_list->p);
 	// print all statement
 	pthread_mutex_unlock(p->mutex_list->p);

@@ -1,6 +1,7 @@
 #include "init.h"
 #include "scheduling.h"
 #include <unistd.h>
+#include <stdio.h>
 
 int main(int argc, char **argv) {
 	t_setting *setting;
@@ -12,11 +13,10 @@ int main(int argc, char **argv) {
 		write(2, "Error: Setting initialization failed\n", 36);
 		return 1;
 	}
-
 	scheduler(setting, processes, mode);
-
+	printf("scheduler started\n");
 	join_threads(setting, processes);
-
+	printf("threads joined\n");
 	// memory_free(setting);
 
 	return 0;
