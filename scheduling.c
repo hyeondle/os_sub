@@ -2,6 +2,7 @@
 #include "init.h"
 #include <stdio.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 static void create_scheduler(t_setting *setting, int mode) {
 	if (mode == 1) {
@@ -22,8 +23,15 @@ void scheduler(t_setting *setting, t_process *processes, int mode) {
 	process = processes->next;
 	printf("process count: %d\n", setting->total_process_count);
 	for (int i = 0; i < setting->total_process_count; i++) {
-		printf("process id: %d\n", process->id);
-		pthread_create(&(process->thread_id), NULL, cycle, (void *)process);
+		if (process == NULL) {
+			fprintf(stderr, "Error: Process not found\n");
+			exit(1);
+		}
+		printf("create thread %d\n", process->id);
+		if (pthread_create(&(process->thread_id), NULL, cycle, (void *)process) != 0) {
+			fprintf(stderr, "Error: Thread creation failed\n");
+			exit(1);
+		}
 		process = process->next;
 	}
 }
@@ -32,10 +40,20 @@ void join_threads(t_setting *setting, t_process *processes) {
 	t_process *process;
 	process = processes->next;
 	for (int i = 0; i < setting->total_process_count; i++) {
-		pthread_join(process->thread_id, NULL);
+		if (process == NULL) {
+			fprintf(stderr, "Error: Process not found\n");
+			exit(1);
+		}
+		if (pthread_join(process->thread_id, NULL) != 0) {
+			fprintf(stderr, "Error: Thread join failed\n");
+			exit(1);
+		}
 		process = process->next;
 	}
-	pthread_join(setting->thread_id, NULL);
+	if (pthread_join(setting->thread_id, NULL) != 0) {
+		fprintf(stderr, "Error: Thread join failed\n");
+		exit(1);
+	}
 }
 
 void printer(t_process *p, t_state state) {

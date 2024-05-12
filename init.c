@@ -91,7 +91,6 @@ t_ready_queue	*make_ready_queue(int id) {
 
 t_setting	*init_setting(char **argv, t_process *processes, int *mode) {
 	int fd;
-	int e;
 	char *buffer;
 	t_setting *setting;
 	t_process *proc_list;
@@ -180,6 +179,8 @@ t_setting	*init_setting(char **argv, t_process *processes, int *mode) {
 	close(fd);
 
 	values->thread_count = setting->total_process_count;
+	*processes = *proc_list;
+	free(proc_list);
 
 	return setting;
 }

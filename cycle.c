@@ -2,7 +2,7 @@
 #include "init.h"
 #include <stdlib.h>
 #include <stdio.h>
-
+#include <unistd.h>
 void	process_entered(t_process *process) {
 	pthread_mutex_lock(process->mutex_list->t);
 	process->values->thread_count--;
@@ -18,6 +18,7 @@ static void	wait_starting(t_process *process) {
 			break;
 		}
 		pthread_mutex_unlock(process->mutex_list->cpu);
+		sleep(1);
 	}
 }
 
@@ -68,8 +69,6 @@ void	*cycle(void *arg) {
 	int time = 0;
 	int response_time = -1;
 	int turnaround_time;
-
-	printf("process id: %d\n", p->id);
 
 	wait_starting(p);
 	before_submit(p, &time);

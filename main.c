@@ -13,6 +13,9 @@ int main(int argc, char **argv) {
 		write(2, "Error: Setting initialization failed\n", 36);
 		return 1;
 	}
+	printf("setting initialized\n");
+	printf("%d\n", setting->values->thread_count);
+	printf("test\n");
 	scheduler(setting, processes, mode);
 	printf("scheduler started\n");
 	join_threads(setting, processes);
