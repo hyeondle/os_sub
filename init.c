@@ -21,8 +21,8 @@ t_process *new_process(char *buffer, t_setting *setting) {
 	tokens = ft_split(buffer, ' ');
 
 	process->id = atoi(tokens[0]);
-	process->arrival_time = atoi(tokens[1]);
-	process->burst_time = atoi(tokens[2]);
+	process->burst_time = atoi(tokens[1]);
+	process->arrival_time = atoi(tokens[2]);
 	process->priority = atoi(tokens[3]);
 	process->waiting_time = 0;
 	process->remaining_time = process->burst_time;
@@ -32,6 +32,7 @@ t_process *new_process(char *buffer, t_setting *setting) {
 	process->submitted = FALSE;
 	process->loaded = FALSE;
 	process->next = NULL;
+	process->mutex_list = setting->mutex_list;
 
 	if (setting->maximum_arrival_time < process->arrival_time)
 		setting->maximum_arrival_time = process->arrival_time;
@@ -45,7 +46,7 @@ t_process *new_process(char *buffer, t_setting *setting) {
 
 t_mutex_list *create_mutex_list() {
 	t_mutex_list *mutex_list;
-	int i, j, k;
+	int i, j, k, l;
 
 
 	mutex_list = (t_mutex_list *)malloc(sizeof(t_mutex_list));
@@ -57,7 +58,8 @@ t_mutex_list *create_mutex_list() {
 	mutex_list->cpu = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
 	mutex_list->t = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
 	mutex_list->ready_queue = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
-	if (mutex_list->cpu == NULL || mutex_list->t == NULL || mutex_list->ready_queue == NULL) {
+	mutex_list->p = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
+	if (mutex_list->cpu == NULL || mutex_list->t == NULL || mutex_list->ready_queue == NULL || mutex_list->p == NULL) {
 		write(2, "Error: Mutex initialization failed\n", 36);
 		exit(1);
 	}
@@ -65,8 +67,9 @@ t_mutex_list *create_mutex_list() {
 	i = pthread_mutex_init(mutex_list->cpu, NULL);
 	j = pthread_mutex_init(mutex_list->t, NULL);
 	k = pthread_mutex_init(mutex_list->ready_queue, NULL);
+	l = pthread_mutex_init(mutex_list->p, NULL);
 
-	if (i != 0 || j != 0 || k != 0) {
+	if (i != 0 || j != 0 || k != 0 || l != 0) {
 		write(2, "Error: Mutex initialization failed\n", 36);
 		exit(1);
 	}

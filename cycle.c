@@ -4,9 +4,9 @@
 #include <stdio.h>
 #include <unistd.h>
 void	process_entered(t_process *process) {
-	pthread_mutex_lock(process->mutex_list->t);
+	pthread_mutex_lock(process->mutex_list->cpu);
 	process->values->thread_count--;
-	pthread_mutex_unlock(process->mutex_list->t);
+	pthread_mutex_unlock(process->mutex_list->cpu);
 }
 
 static void	wait_starting(t_process *process) {
@@ -49,7 +49,9 @@ void arrival(t_process *process) {
 	pthread_mutex_unlock(process->mutex_list->ready_queue);
 
 	process->submitted = TRUE;
-	printer(process, ARRIVED);
+	pthread_mutex_lock(process->mutex_list->p);
+	printf("Process %d submitted\n", process->id);
+	pthread_mutex_unlock(process->mutex_list->p);
 }
 
 void	before_submit(t_process *p, int *time) {
@@ -71,6 +73,9 @@ void	*cycle(void *arg) {
 	int turnaround_time;
 
 	wait_starting(p);
+
+	printf("cycle started\n");
+
 	before_submit(p, &time);
 
 	while (1) {
@@ -95,7 +100,7 @@ void	*cycle(void *arg) {
 		time = p->values->time;
 		pthread_mutex_unlock(p->mutex_list->t);
 	}
-	printer(p, TERMINATED);
+	printer(p, TERMINATED, time);
 	pthread_mutex_lock(p->mutex_list->p);
 	// print all statement
 	pthread_mutex_unlock(p->mutex_list->p);

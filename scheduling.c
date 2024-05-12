@@ -32,6 +32,9 @@ void scheduler(t_setting *setting, t_process *processes, int mode) {
 			fprintf(stderr, "Error: Thread creation failed\n");
 			exit(1);
 		}
+		// pthread_mutex_lock(process->mutex_list->cpu);
+		// process->values->thread_count--;
+		// pthread_mutex_unlock(process->mutex_list->cpu);
 		process = process->next;
 	}
 }
@@ -56,11 +59,9 @@ void join_threads(t_setting *setting, t_process *processes) {
 	}
 }
 
-void printer(t_process *p, t_state state) {
-	int time;
+void printer(t_process *p, t_state state, int time) {
 	int id;
 
-	time = p->values->time;
 	id = p->id;
 
 	pthread_mutex_lock(p->mutex_list->p);

@@ -33,6 +33,7 @@ static void	wait_starting(t_setting *set) {
 			break;
 		}
 		pthread_mutex_unlock(set->mutex_list->cpu);
+		sleep(1);
 	}
 }
 
@@ -51,8 +52,14 @@ void	*fcfs(void *arg) {
 		return NULL;
 	}
 
+	printf("fcfs initialized\n");
+
 	wait_starting(set);
 
+	printf("fcfs started\n");
+	printf("%d\n", set->total_process_count);
+	printf("%d\n", set->values->thread_count);
+	sleep(1);
 	while (fcfs->counter < set->total_process_count) {
 		pthread_mutex_lock(set->mutex_list->ready_queue);
 		ready_queue = set->values->ready_queue;
@@ -65,13 +72,20 @@ void	*fcfs(void *arg) {
 			free(temp);
 		} else {
 			pthread_mutex_unlock(set->mutex_list->ready_queue);
+			printf("%d : no process\n", set->values->time);
+			pthread_mutex_lock(set->mutex_list->t);
+			set->values->time++;
+			pthread_mutex_unlock(set->mutex_list->t);
+			sleep(1);
 			continue;
 		}
 		pthread_mutex_unlock(set->mutex_list->ready_queue);
 
 		pthread_mutex_lock(set->mutex_list->cpu);
 		set->values->process_on_cpu = id;
+		printf("%d : %d started\n", set->values->time, id);
 		pthread_mutex_unlock(set->mutex_list->cpu);
+
 
 		//print
 		pthread_mutex_lock(set->mutex_list->p);
