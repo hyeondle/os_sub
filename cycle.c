@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
+
 void	process_entered(t_process *process) {
 	pthread_mutex_lock(process->mutex_list->cpu);
 	process->values->thread_count--;
@@ -65,6 +66,42 @@ void	before_submit(t_process *p, int *time) {
 	}
 }
 
+void	enter_rountine(t_process *p) {
+	// printf("enter routine\n");
+	pthread_mutex_lock(p->mutex_list->check);
+	p->values->checked_count++;
+	pthread_mutex_unlock(p->mutex_list->check);
+	// printf("checked count");
+}
+
+static void	exit_routine(t_process *p) {
+	pthread_mutex_lock(p->mutex_list->check);
+	p->values->checked_count2++;
+	pthread_mutex_unlock(p->mutex_list->check);
+}
+
+void	wait_enter_routine(t_process *p) {
+	while (1) {
+		pthread_mutex_lock(p->mutex_list->check);
+		if (p->values->routine == TRUE) {
+			pthread_mutex_unlock(p->mutex_list->check);
+			break;
+		}
+		pthread_mutex_unlock(p->mutex_list->check);
+	}
+}
+
+void	wait_exit_routine(t_process *p) {
+	while (1) {
+		pthread_mutex_lock(p->mutex_list->check);
+		if (p->values->routine == FALSE) {
+			pthread_mutex_unlock(p->mutex_list->check);
+			break;
+		}
+		pthread_mutex_unlock(p->mutex_list->check);
+	}
+}
+
 void	*cycle(void *arg) {
 	t_process *p;
 	p = (t_process *)arg;
@@ -76,13 +113,35 @@ void	*cycle(void *arg) {
 
 	printf("cycle started\n");
 
-	before_submit(p, &time);
+	// before_submit(p, &time);
 
 	while (1) {
-		if (p->remaining_time == 0) {
+		if (p->remaining_time == 1) {
 			// printer(p, FINISHED);
+			printf("exit process\n");
 			turnaround_time = time - p->arrival_time;
+			pthread_mutex_lock(p->mutex_list->check);
+			p->values->remain_thread_count--;
+			pthread_mutex_unlock(p->mutex_list->check);
 			break;
+		}
+
+		enter_rountine(p);
+		wait_enter_routine(p);
+
+		// printf("rountine start\n");
+
+		pthread_mutex_lock(p->mutex_list->t);
+		time = p->values->time;
+		pthread_mutex_unlock(p->mutex_list->t);
+
+		if (p->submitted == FALSE) {
+			if (time == p->arrival_time) {
+				arrival(p);
+			}
+			exit_routine(p);
+			wait_exit_routine(p);
+			continue;
 		}
 
 		pthread_mutex_lock(p->mutex_list->cpu);
@@ -96,13 +155,17 @@ void	*cycle(void *arg) {
 		}
 		pthread_mutex_unlock(p->mutex_list->cpu);
 
-		pthread_mutex_lock(p->mutex_list->t);
-		time = p->values->time;
-		pthread_mutex_unlock(p->mutex_list->t);
+		exit_routine(p);
+		wait_exit_routine(p);
 	}
-	printer(p, TERMINATED, time);
+
+	// pthread_mutex_lock(p->mutex_list->check);
+	// p->values->remain_thread_count--;
+	// pthread_mutex_unlock(p->mutex_list->check);
+
 	pthread_mutex_lock(p->mutex_list->p);
 	// print all statement
+	printf("Process %d Terminated\n", p->id);
 	pthread_mutex_unlock(p->mutex_list->p);
 	return (0);
 }

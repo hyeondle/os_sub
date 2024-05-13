@@ -29,9 +29,13 @@ typedef struct s_ready_queue {
 typedef struct s_values {
 	int time;
 	int thread_count;
-	int loaded_process_id;
+	int remain_thread_count;
+	int checked_count;
+	int checked_count2;
+	int loaded_process_execution_time;
 	int process_on_cpu;
 	int priority;
+	t_bool routine;
 	struct s_ready_queue *ready_queue;
 }	t_values;
 
@@ -40,6 +44,7 @@ typedef struct s_mutex_list {
 	pthread_mutex_t	*t;
 	pthread_mutex_t *p;
 	pthread_mutex_t *ready_queue;
+	pthread_mutex_t *check;
 }	t_mutex_list;
 
 typedef struct s_setting {

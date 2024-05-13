@@ -37,6 +37,42 @@ static void	wait_starting(t_setting *set) {
 	}
 }
 
+void	wait_rountine(t_setting *set) {
+	while (1) {
+		pthread_mutex_lock(set->mutex_list->check);
+		if (set->values->checked_count == set->values->remain_thread_count) {
+			set->values->routine = TRUE;
+			set->values->checked_count = 0;
+			pthread_mutex_unlock(set->mutex_list->check);
+			break;
+		}
+		pthread_mutex_unlock(set->mutex_list->check);
+		usleep(100);
+	}
+}
+
+static void	exit_routine(t_setting *set) {
+	while (1) {
+		pthread_mutex_lock(set->mutex_list->check);
+		if (set->values->checked_count2 == set->values->remain_thread_count) {
+			set->values->routine = FALSE;
+			set->values->checked_count2 = 0;
+			pthread_mutex_unlock(set->mutex_list->check);
+			break;
+		}
+		pthread_mutex_unlock(set->mutex_list->check);
+		usleep(100);
+	}
+}
+
+static void job_one(t_setting *set) {
+
+}
+
+static void job_two(t_setting *set) {
+
+}
+
 void	*fcfs(void *arg) {
 	t_setting	*set;
 	t_fcfs		*fcfs;
@@ -52,15 +88,24 @@ void	*fcfs(void *arg) {
 		return NULL;
 	}
 
-	printf("fcfs initialized\n");
-
 	wait_starting(set);
 
-	printf("fcfs started\n");
-	printf("%d\n", set->total_process_count);
-	printf("%d\n", set->values->thread_count);
-	sleep(1);
-	while (fcfs->counter < set->total_process_count) {
+	printf("fcfs start\n");
+	while (1) {
+		if (fcfs->counter == set->total_process_count || set->values->remain_thread_count == 0)
+			break;
+		wait_rountine(set);
+		// printf("fcfs routine\n");
+		usleep(100);
+
+		// pthread_mutex_lock(set->mutex_list->cpu);
+		// if (set->values->loaded_process_execution_time == -1) {
+		// 	pthread_mutex_unlock(set->mutex_list->cpu);
+		// 	job_one(set);
+		// } else {
+		// 	pthread_mutex_unlock(set->mutex_list->cpu);
+		// 	job_two(set);
+		// }
 		pthread_mutex_lock(set->mutex_list->ready_queue);
 		ready_queue = set->values->ready_queue;
 		if (ready_queue->next != NULL) {
@@ -71,16 +116,21 @@ void	*fcfs(void *arg) {
 			ready_queue->next = temp->next;
 			free(temp);
 		} else {
+			if (fcfs->counter == set->total_process_count || set->values->remain_thread_count == 0) {
+				pthread_mutex_unlock(set->mutex_list->ready_queue);
+				exit_routine(set);
+				break;
+			}
 			pthread_mutex_unlock(set->mutex_list->ready_queue);
 			printf("%d : no process\n", set->values->time);
 			pthread_mutex_lock(set->mutex_list->t);
 			set->values->time++;
 			pthread_mutex_unlock(set->mutex_list->t);
-			sleep(1);
+			exit_routine(set);
+			usleep(100);
 			continue;
 		}
 		pthread_mutex_unlock(set->mutex_list->ready_queue);
-
 		pthread_mutex_lock(set->mutex_list->cpu);
 		set->values->process_on_cpu = id;
 		printf("%d : %d started\n", set->values->time, id);
@@ -92,12 +142,10 @@ void	*fcfs(void *arg) {
 		printf("%d : %d loaded on cpu\n", set->values->time, id);
 		pthread_mutex_unlock(set->mutex_list->p);
 
-		for (int i = 0; i < burst_time; i++) {
-			pthread_mutex_lock(set->mutex_list->t);
-			set->values->time++;
-			pthread_mutex_unlock(set->mutex_list->t);
-			sleep(1);
-		}
+		pthread_mutex_lock(set->mutex_list->t);
+		set->values->time = set->values->time + burst_time;
+		pthread_mutex_unlock(set->mutex_list->t);
+
 
 		pthread_mutex_lock(set->mutex_list->cpu);
 		set->values->process_on_cpu = -1;
@@ -110,6 +158,9 @@ void	*fcfs(void *arg) {
 
 		fcfs->counter++;
 
+		// printf("fcfs routine end\n");
+
+		exit_routine(set);
 		// id = temp->id;
 		// burst_time = temp->burst_time;
 		// if (temp->next != NULL)
@@ -135,10 +186,10 @@ void	*fcfs(void *arg) {
 	// print
 	pthread_mutex_lock(set->mutex_list->p);
 	printf("fcfs done\n");
-	printf("total_waiting_time : %d\n", fcfs->total_waiting_time);
-	printf("total_turnaround_time : %d\n", fcfs->total_turnaround_time);
-	printf("avg_waiting_time : %f\n", fcfs->avg_waiting_time);
-	printf("avg_turnaround_time : %f\n", fcfs->avg_turnaround_time);
+	// printf("total_waiting_time : %d\n", fcfs->total_waiting_time);
+	// printf("total_turnaround_time : %d\n", fcfs->total_turnaround_time);
+	// printf("avg_waiting_time : %f\n", fcfs->avg_waiting_time);
+	// printf("avg_turnaround_time : %f\n", fcfs->avg_turnaround_time);
 	pthread_mutex_unlock(set->mutex_list->p);
 
 	return (0);
