@@ -112,7 +112,7 @@ static void job_one(t_setting *set, t_ready_queue *ready_queue, t_fcfs *fcfs) {
 static void job_two(t_setting *set, int running_id, t_fcfs *fcfs) {
 	int remaining_time = -1;
 
-	while (remaining_time != -1) {
+	while (remaining_time == -1) {
 		pthread_mutex_lock(set->mutex_list->r_t);
 		remaining_time = set->values->remaining_time;
 		pthread_mutex_unlock(set->mutex_list->r_t);
@@ -133,6 +133,9 @@ static void job_two(t_setting *set, int running_id, t_fcfs *fcfs) {
 		pthread_mutex_lock(set->mutex_list->t);
 		set->values->time++;
 		pthread_mutex_unlock(set->mutex_list->t);
+		pthread_mutex_lock(set->mutex_list->p);
+		printf("%ds : %d running, %d remaining\n", set->values->time, running_id, remaining_time - 1);
+		pthread_mutex_unlock(set->mutex_list->p);
 		pthread_mutex_lock(set->mutex_list->r_t);
 		set->values->remaining_time = -1;
 		pthread_mutex_unlock(set->mutex_list->r_t);

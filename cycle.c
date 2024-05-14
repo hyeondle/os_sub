@@ -96,7 +96,7 @@ void	*cycle(void *arg) {
 	wait_starting(p);
 
 	while (1) {
-		if (p->remaining_time == 0) {
+		if (p->remaining_time == -1) {
 			printf("exit process\n");
 			turnaround_time = time - p->arrival_time;
 			pthread_mutex_lock(p->mutex_list->check);
@@ -132,10 +132,10 @@ void	*cycle(void *arg) {
 			if (response_time == -1) {
 				response_time = time - p->arrival_time;
 			}
-			p->remaining_time--;
 			pthread_mutex_lock(p->mutex_list->r_t);
 			p->values->remaining_time = p->remaining_time;
 			pthread_mutex_unlock(p->mutex_list->r_t);
+			p->remaining_time--;
 		}
 
 		exit_routine(p);
