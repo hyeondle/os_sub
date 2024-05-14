@@ -107,6 +107,7 @@ void	*cycle(void *arg) {
 	p = (t_process *)arg;
 	int time = 0;
 	int response_time = -1;
+
 	int turnaround_time;
 
 	wait_starting(p);
@@ -116,7 +117,7 @@ void	*cycle(void *arg) {
 	// before_submit(p, &time);
 
 	while (1) {
-		if (p->remaining_time == 1) {
+		if (p->remaining_time == 0) {
 			// printer(p, FINISHED);
 			printf("exit process\n");
 			turnaround_time = time - p->arrival_time;
@@ -158,10 +159,6 @@ void	*cycle(void *arg) {
 		exit_routine(p);
 		wait_exit_routine(p);
 	}
-
-	// pthread_mutex_lock(p->mutex_list->check);
-	// p->values->remain_thread_count--;
-	// pthread_mutex_unlock(p->mutex_list->check);
 
 	pthread_mutex_lock(p->mutex_list->p);
 	// print all statement
