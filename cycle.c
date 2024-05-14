@@ -1,5 +1,6 @@
 #include "scheduling.h"
 #include "init.h"
+#include <pthread.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -29,7 +30,7 @@ void time_check(t_process *process, int *time) {
 	pthread_mutex_unlock(process->mutex_list->t);
 }
 
-void arrival(t_process *process) {
+void arrival(t_process *process, int time) {
 	t_ready_queue *new;
 	t_ready_queue *temp;
 
@@ -51,36 +52,14 @@ void arrival(t_process *process) {
 
 	process->submitted = TRUE;
 	pthread_mutex_lock(process->mutex_list->p);
-	printf("Process %d submitted\n", process->id);
+	printf("%ds : Process %d submitted\n", time, process->id);
 	pthread_mutex_unlock(process->mutex_list->p);
 }
 
-void	before_submit(t_process *p, int *time) {
-	while (1) {
-		time_check(p, time);
-		if (*time == p->arrival_time && p->submitted == FALSE) {
-			arrival(p);
-			// printer(p, READY);
-			break;
-		}
-	}
-}
-
 void	enter_rountine(t_process *p) {
-	// printf("enter routine\n");
 	pthread_mutex_lock(p->mutex_list->check);
 	p->values->checked_count++;
 	pthread_mutex_unlock(p->mutex_list->check);
-	// printf("checked count");
-}
-
-static void	exit_routine(t_process *p) {
-	pthread_mutex_lock(p->mutex_list->check);
-	p->values->checked_count2++;
-	pthread_mutex_unlock(p->mutex_list->check);
-}
-
-void	wait_enter_routine(t_process *p) {
 	while (1) {
 		pthread_mutex_lock(p->mutex_list->check);
 		if (p->values->routine == TRUE) {
@@ -91,7 +70,10 @@ void	wait_enter_routine(t_process *p) {
 	}
 }
 
-void	wait_exit_routine(t_process *p) {
+static void	exit_routine(t_process *p) {
+	pthread_mutex_lock(p->mutex_list->check);
+	p->values->checked_count2++;
+	pthread_mutex_unlock(p->mutex_list->check);
 	while (1) {
 		pthread_mutex_lock(p->mutex_list->check);
 		if (p->values->routine == FALSE) {
@@ -106,19 +88,15 @@ void	*cycle(void *arg) {
 	t_process *p;
 	p = (t_process *)arg;
 	int time = 0;
+	int process_on_cpu = 0;
 	int response_time = -1;
 
 	int turnaround_time;
 
 	wait_starting(p);
 
-	printf("cycle started\n");
-
-	// before_submit(p, &time);
-
 	while (1) {
 		if (p->remaining_time == 0) {
-			// printer(p, FINISHED);
 			printf("exit process\n");
 			turnaround_time = time - p->arrival_time;
 			pthread_mutex_lock(p->mutex_list->check);
@@ -128,36 +106,39 @@ void	*cycle(void *arg) {
 		}
 
 		enter_rountine(p);
-		wait_enter_routine(p);
-
-		// printf("rountine start\n");
-
-		pthread_mutex_lock(p->mutex_list->t);
-		time = p->values->time;
-		pthread_mutex_unlock(p->mutex_list->t);
 
 		if (p->submitted == FALSE) {
+
+			pthread_mutex_lock(p->mutex_list->t);
+			time = p->values->time;
+			pthread_mutex_unlock(p->mutex_list->t);
+
 			if (time == p->arrival_time) {
-				arrival(p);
+				arrival(p, time);
 			}
 			exit_routine(p);
-			wait_exit_routine(p);
 			continue;
 		}
 
 		pthread_mutex_lock(p->mutex_list->cpu);
-		if (p->values->process_on_cpu == p->id) {
+		process_on_cpu = p->values->process_on_cpu;
+		pthread_mutex_unlock(p->mutex_list->cpu);
+
+		if (process_on_cpu != p->id) {
+			p->waiting_time++;
+			exit_routine(p);
+			continue;
+		} else {
 			if (response_time == -1) {
 				response_time = time - p->arrival_time;
 			}
 			p->remaining_time--;
-		} else {
-			p->waiting_time++;
+			pthread_mutex_lock(p->mutex_list->r_t);
+			p->values->remaining_time = p->remaining_time;
+			pthread_mutex_unlock(p->mutex_list->r_t);
 		}
-		pthread_mutex_unlock(p->mutex_list->cpu);
 
 		exit_routine(p);
-		wait_exit_routine(p);
 	}
 
 	pthread_mutex_lock(p->mutex_list->p);

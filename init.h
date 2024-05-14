@@ -35,6 +35,7 @@ typedef struct s_values {
 	int loaded_process_execution_time;
 	int process_on_cpu;
 	int priority;
+	int remaining_time;
 	t_bool routine;
 	struct s_ready_queue *ready_queue;
 }	t_values;
@@ -45,6 +46,7 @@ typedef struct s_mutex_list {
 	pthread_mutex_t *p;
 	pthread_mutex_t *ready_queue;
 	pthread_mutex_t *check;
+	pthread_mutex_t *r_t;
 }	t_mutex_list;
 
 typedef struct s_setting {

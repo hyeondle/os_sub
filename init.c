@@ -46,7 +46,7 @@ t_process *new_process(char *buffer, t_setting *setting) {
 
 t_mutex_list *create_mutex_list() {
 	t_mutex_list *mutex_list;
-	int i, j, k, l, m;
+	int i, j, k, l, m, n;
 
 
 	mutex_list = (t_mutex_list *)malloc(sizeof(t_mutex_list));
@@ -60,7 +60,8 @@ t_mutex_list *create_mutex_list() {
 	mutex_list->ready_queue = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
 	mutex_list->p = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
 	mutex_list->check = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
-	if (mutex_list->cpu == NULL || mutex_list->t == NULL || mutex_list->ready_queue == NULL || mutex_list->p == NULL || mutex_list->check == NULL) {
+	mutex_list->r_t = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
+	if (mutex_list->cpu == NULL || mutex_list->t == NULL || mutex_list->ready_queue == NULL || mutex_list->p == NULL || mutex_list->check == NULL || mutex_list->r_t == NULL) {
 		write(2, "Error: Mutex initialization failed\n", 36);
 		exit(1);
 	}
@@ -70,8 +71,9 @@ t_mutex_list *create_mutex_list() {
 	k = pthread_mutex_init(mutex_list->ready_queue, NULL);
 	l = pthread_mutex_init(mutex_list->p, NULL);
 	m = pthread_mutex_init(mutex_list->check, NULL);
+	n = pthread_mutex_init(mutex_list->r_t, NULL);
 
-	if (i != 0 || j != 0 || k != 0 || l != 0 || m != 0) {
+	if (i != 0 || j != 0 || k != 0 || l != 0 || m != 0 || n != 0) {
 		write(2, "Error: Mutex initialization failed\n", 36);
 		exit(1);
 	}
@@ -141,6 +143,7 @@ t_setting	*init_setting(char **argv, t_process *processes, int *mode) {
 	values->checked_count = 0;
 	values->checked_count2 = 0;
 	values->routine = FALSE;
+	values->remaining_time = -1;
 
 	setting->maximum_arrival_time = 0;
 	setting->total_process_count = 0;

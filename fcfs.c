@@ -65,31 +65,86 @@ static void	exit_routine(t_setting *set) {
 	}
 }
 
-static void job_one(t_setting *set) {
+static void job_one(t_setting *set, t_ready_queue *ready_queue, t_fcfs *fcfs) {
+	t_ready_queue	*temp;
+	int id;
 
+	pthread_mutex_lock(set->mutex_list->ready_queue);
+	ready_queue = set->values->ready_queue;
+	// pthread_mutex_unlock(set->mutex_list->ready_queue);
+
+	if (ready_queue->next != NULL) {
+		printf("ready_queue list : \n");
+		printf("id : ");
+		for (t_ready_queue *temp = ready_queue->next; temp != NULL; temp = temp->next) {
+			printf("%d, ", temp->id);
+		}
+		printf("\n");
+
+		temp = ready_queue->next;
+		id = temp->id;
+
+		ready_queue->next = temp->next;
+		free(temp);
+		pthread_mutex_unlock(set->mutex_list->ready_queue);
+		pthread_mutex_lock(set->mutex_list->cpu);
+		set->values->process_on_cpu = id;
+		pthread_mutex_unlock(set->mutex_list->cpu);
+		pthread_mutex_lock(set->mutex_list->p);
+		printf("%ds : %d loaded on cpu\n", set->values->time, id);
+		pthread_mutex_unlock(set->mutex_list->p);
+		// exit_routine(set);
+	} else {
+		pthread_mutex_unlock(set->mutex_list->ready_queue);
+		if (fcfs->counter == set->total_process_count || set->values->remain_thread_count == 0) {
+			// exit_routine(set);
+			return ;
+		}
+		printf("%ds : no process\n", set->values->time);
+		pthread_mutex_lock(set->mutex_list->t);
+		set->values->time++;
+		pthread_mutex_unlock(set->mutex_list->t);
+		// exit_routine(set);
+		// usleep(100);
+	}
 }
 
-static void job_two(t_setting *set) {
+static void job_two(t_setting *set, int running_id, t_fcfs *fcfs) {
+	int remaining_time = -1;
 
+	while (remaining_time != -1) {
+		pthread_mutex_lock(set->mutex_list->r_t);
+		remaining_time = set->values->remaining_time;
+		pthread_mutex_unlock(set->mutex_list->r_t);
+	}
+
+	if (remaining_time == 0) {
+		pthread_mutex_lock(set->mutex_list->p);
+		printf("%ds : %d finished\n", set->values->time, running_id);
+		pthread_mutex_unlock(set->mutex_list->p);
+		pthread_mutex_lock(set->mutex_list->cpu);
+		set->values->process_on_cpu = -1;
+		pthread_mutex_unlock(set->mutex_list->cpu);
+		pthread_mutex_lock(set->mutex_list->r_t);
+		set->values->remaining_time = -1;
+		pthread_mutex_unlock(set->mutex_list->r_t);
+		fcfs->counter++;
+	} else {
+		pthread_mutex_lock(set->mutex_list->t);
+		set->values->time++;
+		pthread_mutex_unlock(set->mutex_list->t);
+		pthread_mutex_lock(set->mutex_list->r_t);
+		set->values->remaining_time = -1;
+		pthread_mutex_unlock(set->mutex_list->r_t);
+	}
 }
-
-/*
-수정 방법 :
-remaining_time은 -1인 상태이다.
-cpu에 프로세스가 로드되면 해당 시간은 0으로 변경된다.
-그러면 해당 시간은 프로세스 스레드에 의해 해당 프로세스의 burst_time으로 변경된다.
-모니터링 스레드는 해당 시간이 0이 아님을 인지하면 해당 프로세스의 remaining_time을 1 감소시킨다.
-기존 스레드는 해당 시간이 바뀌었음을 인지하면(1 감소를 인지하면) 자신의 remaining_time을 해당 시간으로 바꾼다.
-그리고 해당 시간이 0이 되면 해당 프로세스의 remaining_time을 -1로 바꾼다.
-그러면 모니터링 스레드는 해당 프로세스의 remaining_time이 -1임을 인지하고 해당 프로세스의 스레드를 종료시킨다.
-*/
 
 void	*fcfs(void *arg) {
 	t_setting	*set;
 	t_fcfs		*fcfs;
 	t_ready_queue	*ready_queue;
 	t_ready_queue	*temp;
-	int id;
+	int running_id;
 	int burst_time;
 
 	set = (t_setting *)arg;
@@ -105,98 +160,20 @@ void	*fcfs(void *arg) {
 	while (1) {
 		if (fcfs->counter == set->total_process_count || set->values->remain_thread_count == 0)
 			break;
+		// printf("fcfs routine start\n");
 		wait_rountine(set);
-		// printf("fcfs routine\n");
 		usleep(100);
 
-		// pthread_mutex_lock(set->mutex_list->cpu);
-		// if (set->values->loaded_process_execution_time == -1) {
-		// 	pthread_mutex_unlock(set->mutex_list->cpu);
-		// 	job_one(set);
-		// } else {
-		// 	pthread_mutex_unlock(set->mutex_list->cpu);
-		// 	job_two(set);
-		// }
-		pthread_mutex_lock(set->mutex_list->ready_queue);
-		ready_queue = set->values->ready_queue;
-		if (ready_queue->next != NULL) {
-			printf("ready_queue list : \n");
-			printf("id : ");
-			for (temp = ready_queue->next; temp != NULL; temp = temp->next) {
-				printf("%d, ", temp->id);
-			}
-			printf("\n");
-			temp = ready_queue->next;
-			id = temp->id;
-			burst_time = temp->burst_time;
+		pthread_mutex_lock(set->mutex_list->cpu);
+		running_id = set->values->process_on_cpu;
+		pthread_mutex_unlock(set->mutex_list->cpu);
 
-			ready_queue->next = temp->next;
-			free(temp);
+		if (running_id == -1) {
+			job_one(set, ready_queue, fcfs);
 		} else {
-			if (fcfs->counter == set->total_process_count || set->values->remain_thread_count == 0) {
-				pthread_mutex_unlock(set->mutex_list->ready_queue);
-				exit_routine(set);
-				break;
-			}
-			pthread_mutex_unlock(set->mutex_list->ready_queue);
-			printf("%ds : no process\n", set->values->time);
-			pthread_mutex_lock(set->mutex_list->t);
-			set->values->time++;
-			pthread_mutex_unlock(set->mutex_list->t);
-			exit_routine(set);
-			usleep(100);
-			continue;
+			job_two(set, running_id, fcfs);
 		}
-		pthread_mutex_unlock(set->mutex_list->ready_queue);
-		pthread_mutex_lock(set->mutex_list->cpu);
-		set->values->process_on_cpu = id;
-		printf("%ds : %d started\n", set->values->time, id);
-		pthread_mutex_unlock(set->mutex_list->cpu);
-
-
-		//print
-		pthread_mutex_lock(set->mutex_list->p);
-		printf("%ds : %d loaded on cpu\n", set->values->time, id);
-		pthread_mutex_unlock(set->mutex_list->p);
-
-		pthread_mutex_lock(set->mutex_list->t);
-		set->values->time = set->values->time + burst_time;
-		pthread_mutex_unlock(set->mutex_list->t);
-
-
-		pthread_mutex_lock(set->mutex_list->cpu);
-		set->values->process_on_cpu = -1;
-		pthread_mutex_unlock(set->mutex_list->cpu);
-
-		//print
-		pthread_mutex_lock(set->mutex_list->p);
-		printf("%ds : %d finished\n", set->values->time, id);
-		pthread_mutex_unlock(set->mutex_list->p);
-
-		fcfs->counter++;
-
-		// printf("fcfs routine end\n");
-
 		exit_routine(set);
-		// id = temp->id;
-		// burst_time = temp->burst_time;
-		// if (temp->next != NULL)
-		// 	ready_queue->next = temp->next;
-		// else
-		// 	ready_queue->next = NULL;
-		// free(temp);
-		// pthread_mutex_unlock(set->mutex_list->ready_queue);
-		// pthread_mutex_lock(set->mutex_list->cpu);
-		// set->values->process_on_cpu = id;
-		// pthread_mutex_unlock(set->mutex_list->cpu);
-		// for (int i = 0; i < burst_time; i++) {
-		// 	pthread_mutex_lock(set->mutex_list->t);
-		// 	set->values->time++;
-		// 	pthread_mutex_unlock(set->mutex_list->t);
-		// }
-		// pthread_mutex_lock(set->mutex_list->cpu);
-		// set->values->process_on_cpu = -1;
-		// pthread_mutex_unlock(set->mutex_list->cpu);
 	}
 
 	// free(fcfs);
