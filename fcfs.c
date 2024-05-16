@@ -73,7 +73,7 @@ static void job_two(t_setting *set, int running_id) {
 		set->values->time++;
 		pthread_mutex_unlock(set->mutex_list->t);
 		pthread_mutex_lock(set->mutex_list->p);
-		printf("%ds : %d running, %d remaining\n", set->values->time, running_id, remaining_time);
+		// printf("%ds : %d running, %d remaining\n", set->values->time, running_id, remaining_time);
 		pthread_mutex_unlock(set->mutex_list->p);
 		pthread_mutex_lock(set->mutex_list->r_t);
 		set->values->remaining_time = -1;

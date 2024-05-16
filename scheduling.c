@@ -27,7 +27,6 @@ void scheduler(t_setting *setting, t_process *processes, int mode) {
 			fprintf(stderr, "Error: Process not found\n");
 			exit(1);
 		}
-		printf("create thread %d\n", process->id);
 		if (pthread_create(&(process->thread_id), NULL, cycle, (void *)process) != 0) {
 			fprintf(stderr, "Error: Thread creation failed\n");
 			exit(1);

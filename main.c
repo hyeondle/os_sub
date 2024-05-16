@@ -20,7 +20,6 @@ int main(int argc, char **argv) {
 		return 1;
 	}
 	printf("%d thread will be created\n", setting->values->thread_count);
-	printf("test %d\n", processes->burst_time);
 	scheduler(setting, processes, mode);
 	join_threads(setting, processes);
 
