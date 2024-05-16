@@ -2,6 +2,7 @@
 # define SCHEDULING_H
 
 # include "init.h"
+#include <sys/wait.h>
 
 typedef enum s_state {
 	ARRIVED,
@@ -28,6 +29,11 @@ typedef struct s_fcfs {
 void scheduler(t_setting *setting, t_process *processes, int mode);
 void join_threads(t_setting *setting, t_process *processes);
 void printer(t_process *p, t_state state, int time);
+// monitoring thread's f
+void wait_starting(t_setting *set);
+void wait_routine(t_setting *set);
+void exit_routine(t_setting *set);
+
 // cycle.c
 void	*cycle(void *arg);
 // fcfs.c

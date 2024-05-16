@@ -96,7 +96,7 @@ t_ready_queue	*make_ready_queue(int id) {
 	return queue;
 }
 
-t_setting	*init_setting(char **argv, t_process *processes, int *mode) {
+t_setting	*init_setting(char **argv, int *mode) {
 	int fd;
 	char *buffer;
 	t_setting *setting;
@@ -114,6 +114,7 @@ t_setting	*init_setting(char **argv, t_process *processes, int *mode) {
 		free(setting);
 		return NULL;
 	}
+	memset(buffer, 0, 1024 * sizeof(char));
 
 	proc_list = (t_process *)malloc(sizeof(t_process));
 	if (proc_list == NULL) {
@@ -174,7 +175,8 @@ t_setting	*init_setting(char **argv, t_process *processes, int *mode) {
 
 	temp = proc_list;
 
-	while (read(fd, buffer + strlen(buffer), 1) > 0) {
+	int loop_depth = 0;
+	while (loop_depth < 1024 && read(fd, buffer + strlen(buffer), 1) > 0) {
 		if (buffer[strlen(buffer) - 1] == '\n') {
 			if (buffer[0] != '#' && buffer[0] != '\0') {
 				temp->next = new_process(buffer, setting);
@@ -182,7 +184,10 @@ t_setting	*init_setting(char **argv, t_process *processes, int *mode) {
 			}
 			memset(buffer, 0, 1024 * sizeof(char));
 			buffer[0] = '\0';
+			loop_depth = 0;
 		}
+		loop_depth++;
+		buffer[loop_depth + 1] = '\0';
 	}
 	if (buffer[0] != '#' && buffer[0] != '\0')
 		temp->next = new_process(buffer, setting);
@@ -191,8 +196,8 @@ t_setting	*init_setting(char **argv, t_process *processes, int *mode) {
 
 	values->thread_count = setting->total_process_count;
 	values->remain_thread_count = setting->total_process_count;
-	*processes = *proc_list;
-	free(proc_list);
+
+	setting->processes = proc_list;
 
 	return setting;
 }

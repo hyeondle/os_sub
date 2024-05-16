@@ -11,7 +11,7 @@ void	process_entered(t_process *process) {
 	pthread_mutex_unlock(process->mutex_list->cpu);
 }
 
-static void	wait_starting(t_process *process) {
+static void	wait_p_starting(t_process *process) {
 	process_entered(process);
 	while(1) {
 		pthread_mutex_lock(process->mutex_list->cpu);
@@ -56,7 +56,7 @@ void arrival(t_process *process, int time) {
 	pthread_mutex_unlock(process->mutex_list->p);
 }
 
-void	enter_rountine(t_process *p) {
+void	enter_p_rountine(t_process *p) {
 	pthread_mutex_lock(p->mutex_list->check);
 	p->values->checked_count++;
 	pthread_mutex_unlock(p->mutex_list->check);
@@ -70,7 +70,7 @@ void	enter_rountine(t_process *p) {
 	}
 }
 
-static void	exit_routine(t_process *p) {
+static void	exit_p_routine(t_process *p) {
 	pthread_mutex_lock(p->mutex_list->check);
 	p->values->checked_count2++;
 	pthread_mutex_unlock(p->mutex_list->check);
@@ -91,21 +91,22 @@ void	*cycle(void *arg) {
 	int process_on_cpu = 0;
 	int response_time = -1;
 
-	int turnaround_time;
-
-	wait_starting(p);
+	wait_p_starting(p);
 
 	while (1) {
-		if (p->remaining_time == -1) {
+		if (p->remaining_time == 0) {
 			printf("exit process\n");
-			turnaround_time = time - p->arrival_time;
+			pthread_mutex_lock(p->mutex_list->t);
+			time = p->values->time;
+			pthread_mutex_unlock(p->mutex_list->t);
+			p->turnaround_time = time - p->arrival_time;
 			pthread_mutex_lock(p->mutex_list->check);
 			p->values->remain_thread_count--;
 			pthread_mutex_unlock(p->mutex_list->check);
 			break;
 		}
 
-		enter_rountine(p);
+		enter_p_rountine(p);
 
 		if (p->submitted == FALSE) {
 
@@ -116,7 +117,7 @@ void	*cycle(void *arg) {
 			if (time == p->arrival_time) {
 				arrival(p, time);
 			}
-			exit_routine(p);
+			exit_p_routine(p);
 			continue;
 		}
 
@@ -126,24 +127,28 @@ void	*cycle(void *arg) {
 
 		if (process_on_cpu != p->id) {
 			p->waiting_time++;
-			exit_routine(p);
-			continue;
 		} else {
 			if (response_time == -1) {
-				response_time = time - p->arrival_time;
+				pthread_mutex_lock(p->mutex_list->t);
+				time = p->values->time;
+				pthread_mutex_unlock(p->mutex_list->t);
+				p->response_time = time - p->arrival_time;
 			}
+			p->remaining_time--;
 			pthread_mutex_lock(p->mutex_list->r_t);
 			p->values->remaining_time = p->remaining_time;
 			pthread_mutex_unlock(p->mutex_list->r_t);
-			p->remaining_time--;
 		}
 
-		exit_routine(p);
+		exit_p_routine(p);
 	}
 
 	pthread_mutex_lock(p->mutex_list->p);
-	// print all statement
 	printf("Process %d Terminated\n", p->id);
+	printf("Waiting Time: %d\n", p->waiting_time);
+	printf("Turnaround Time: %d\n", p->turnaround_time);
+	printf("Response Time: %d\n", p->response_time);
 	pthread_mutex_unlock(p->mutex_list->p);
 	return (0);
 }
+//waiting time 싱크 안맞는거 고치기

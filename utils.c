@@ -89,14 +89,12 @@ static char	*put_word(char *str, char set, size_t c, char **tab)
 
 char	**ft_split(char const *s, char c)
 {
-	size_t	i;
 	char	**tab;
 	char	*temp;
 
 	if (!s)
 		return (NULL);
 	temp = (char *)s;
-	i = 0;
 	tab = (char **)malloc(sizeof(char *) * (tab_size(temp, c) + 1));
 	if (!tab)
 		return (NULL);

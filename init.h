@@ -49,20 +49,6 @@ typedef struct s_mutex_list {
 	pthread_mutex_t *r_t;
 }	t_mutex_list;
 
-typedef struct s_setting {
-	int	time;
-	int	counter;
-	int process_on_cpu;
-
-	int total_process_count;
-	int maximum_arrival_time;
-
-	t_values *values;
-
-	t_mutex_list	*mutex_list;
-	pthread_t		thread_id;
-}	t_setting;
-
 typedef struct s_process {
 	//inputs
 	int		id;
@@ -85,6 +71,23 @@ typedef struct s_process {
 	struct s_process	*next;
 }	t_process;
 
-t_setting	*init_setting(char **argv, t_process *processes, int *mode);
+typedef struct s_setting {
+	int	time;
+	int	counter;
+	int process_on_cpu;
+
+	int total_process_count;
+	int maximum_arrival_time;
+
+	t_process	*processes;
+
+	t_values *values;
+
+	t_mutex_list	*mutex_list;
+	pthread_t		thread_id;
+}	t_setting;
+
+t_setting	*init_setting(char **argv, int *mode);
+void memory_free(t_setting *setting, t_process *processes);
 
 #endif
