@@ -94,7 +94,7 @@ void	*cycle(void *arg) {
 	wait_p_starting(p);
 
 	while (1) {
-		if (p->remaining_time == 0) {
+		if (p->remaining_time == -1) {
 			printf("exit process\n");
 			pthread_mutex_lock(p->mutex_list->t);
 			time = p->values->time;
@@ -129,15 +129,19 @@ void	*cycle(void *arg) {
 			p->waiting_time++;
 		} else {
 			if (p->response_time == -1) {
+				pthread_mutex_lock(p->mutex_list->p);
+				printf("Process %d is running\n", p->id);
+				printf("Burst Time: %d\n", p->burst_time);
+				pthread_mutex_unlock(p->mutex_list->p);
 				pthread_mutex_lock(p->mutex_list->t);
 				time = p->values->time;
 				pthread_mutex_unlock(p->mutex_list->t);
 				p->response_time = time - p->arrival_time;
 			}
-			p->remaining_time--;
 			pthread_mutex_lock(p->mutex_list->r_t);
 			p->values->remaining_time = p->remaining_time;
 			pthread_mutex_unlock(p->mutex_list->r_t);
+			p->remaining_time--;
 		}
 
 		exit_p_routine(p);
