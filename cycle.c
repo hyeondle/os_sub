@@ -92,6 +92,7 @@ void	*cycle(void *arg) {
 	t_process *p;
 	p = (t_process *)arg;
 	int time = -1;
+	int prev_time = 0;
 	int process_on_cpu = 0;
 	int response_time = -1;
 
@@ -103,7 +104,7 @@ void	*cycle(void *arg) {
 			pthread_mutex_lock(p->mutex_list->t);
 			time = p->values->time;
 			pthread_mutex_unlock(p->mutex_list->t);
-			p->turnaround_time = time - p->arrival_time;
+			p->turnaround_time = prev_time - p->arrival_time;
 			pthread_mutex_lock(p->mutex_list->check);
 			p->values->remain_thread_count--;
 			pthread_mutex_unlock(p->mutex_list->check);
@@ -138,7 +139,7 @@ void	*cycle(void *arg) {
 		if (process_on_cpu != p->id) {
 			pthread_mutex_lock(p->mutex_list->cpu);
 			if (p->values->cpu_working == TRUE)
-				p->waiting_time++;
+				p->waiting_time = p->waiting_time + time - prev_time;
 			pthread_mutex_unlock(p->mutex_list->cpu);
 		} else {
 			if (p->response_time == -1) {
@@ -156,6 +157,8 @@ void	*cycle(void *arg) {
 			pthread_mutex_unlock(p->mutex_list->r_t);
 			p->remaining_time--;
 		}
+
+		prev_time = time;
 
 		exit_p_routine(p);
 	}

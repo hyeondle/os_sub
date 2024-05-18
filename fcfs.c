@@ -60,11 +60,11 @@ static void job_two(t_setting *set, int running_id) {
 		pthread_mutex_unlock(set->mutex_list->p);
 		pthread_mutex_lock(set->mutex_list->cpu);
 		set->values->process_on_cpu = -1;
-		set->values->cpu_working = FALSE;
+		// set->values->cpu_working = FALSE;
 		pthread_mutex_unlock(set->mutex_list->cpu);
-		// pthread_mutex_lock(set->mutex_list->t);
-		// set->values->time++;
-		// pthread_mutex_unlock(set->mutex_list->t);
+		pthread_mutex_lock(set->mutex_list->t);
+		set->values->time = set->values->time + CONTEXT_SWITCH;
+		pthread_mutex_unlock(set->mutex_list->t);
 		pthread_mutex_lock(set->mutex_list->r_t);
 		set->values->remaining_time = -1;
 		pthread_mutex_unlock(set->mutex_list->r_t);
