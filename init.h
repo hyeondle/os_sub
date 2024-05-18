@@ -37,6 +37,7 @@ typedef struct s_values {
 	int priority;
 	int remaining_time;
 	t_bool routine;
+	t_bool cpu_working;
 	struct s_ready_queue *ready_queue;
 }	t_values;
 

@@ -24,12 +24,6 @@ static void	wait_p_starting(t_process *process) {
 	}
 }
 
-void time_check(t_process *process, int *time) {
-	pthread_mutex_lock(process->mutex_list->t);
-	*time = process->values->time;
-	pthread_mutex_unlock(process->mutex_list->t);
-}
-
 void arrival(t_process *process, int time) {
 	t_ready_queue *new;
 	t_ready_queue *temp;
@@ -84,10 +78,20 @@ static void	exit_p_routine(t_process *p) {
 	}
 }
 
+int time_check(t_process *p, int time) {
+	int now = -1;
+	while (now != time) {
+		pthread_mutex_lock(p->mutex_list->t);
+		now = p->values->time;
+		pthread_mutex_unlock(p->mutex_list->t);
+	}
+	return now;
+}
+
 void	*cycle(void *arg) {
 	t_process *p;
 	p = (t_process *)arg;
-	int time = 0;
+	int time = -1;
 	int process_on_cpu = 0;
 	int response_time = -1;
 
@@ -108,11 +112,17 @@ void	*cycle(void *arg) {
 
 		enter_p_rountine(p);
 
+		// time = time_check(p, time);
+
+		pthread_mutex_lock(p->mutex_list->t);
+		time = p->values->time;
+		pthread_mutex_unlock(p->mutex_list->t);
+
 		if (p->submitted == FALSE) {
 
-			pthread_mutex_lock(p->mutex_list->t);
-			time = p->values->time;
-			pthread_mutex_unlock(p->mutex_list->t);
+			// pthread_mutex_lock(p->mutex_list->t);
+			// time = p->values->time;
+			// pthread_mutex_unlock(p->mutex_list->t);
 
 			if (time == p->arrival_time) {
 				arrival(p, time);
@@ -126,16 +136,19 @@ void	*cycle(void *arg) {
 		pthread_mutex_unlock(p->mutex_list->cpu);
 
 		if (process_on_cpu != p->id) {
-			p->waiting_time++;
+			pthread_mutex_lock(p->mutex_list->cpu);
+			if (p->values->cpu_working == TRUE)
+				p->waiting_time++;
+			pthread_mutex_unlock(p->mutex_list->cpu);
 		} else {
 			if (p->response_time == -1) {
 				pthread_mutex_lock(p->mutex_list->p);
 				printf("Process %d is running\n", p->id);
 				printf("Burst Time: %d\n", p->burst_time);
 				pthread_mutex_unlock(p->mutex_list->p);
-				pthread_mutex_lock(p->mutex_list->t);
-				time = p->values->time;
-				pthread_mutex_unlock(p->mutex_list->t);
+				// pthread_mutex_lock(p->mutex_list->t);
+				// time = p->values->time;
+				// pthread_mutex_unlock(p->mutex_list->t);
 				p->response_time = time - p->arrival_time;
 			}
 			pthread_mutex_lock(p->mutex_list->r_t);

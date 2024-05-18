@@ -145,6 +145,7 @@ t_setting	*init_setting(char **argv, int *mode) {
 	values->checked_count2 = 0;
 	values->routine = FALSE;
 	values->remaining_time = -1;
+	values->cpu_working = FALSE;
 
 	setting->maximum_arrival_time = 0;
 	setting->total_process_count = 0;
