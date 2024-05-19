@@ -7,7 +7,7 @@
 #  define CONTEXT_SWITCH 0
 # endif
 # ifndef QUANTUM
-#  define QUANTUM 5
+#  define QUANTUM 20
 # endif
 
 typedef enum e_bool {

@@ -11,9 +11,9 @@ static void create_scheduler(t_setting *setting, int mode) {
 		pthread_create(&(setting->thread_id), NULL, sjf, setting);
 	} else if (mode == 3) {
 		pthread_create(&(setting->thread_id), NULL, srtf, setting);
+	} else if (mode == 4) {
+		pthread_create(&(setting->thread_id), NULL, round_robin, setting);
 	}
-	// } else if (mode == 3) {
-	// 	pthread_create(&(setting->thread_id), NULL, round_robin, setting);
 }
 
 void scheduler(t_setting *setting, t_process *processes, int mode) {
