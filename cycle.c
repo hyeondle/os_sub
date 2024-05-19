@@ -148,9 +148,6 @@ void	*cycle(void *arg) {
 				printf("Process %d is running\n", p->id);
 				printf("Burst Time: %d\n", p->burst_time);
 				pthread_mutex_unlock(p->mutex_list->p);
-				// pthread_mutex_lock(p->mutex_list->t);
-				// time = p->values->time;
-				// pthread_mutex_unlock(p->mutex_list->t);
 				p->response_time = time - p->arrival_time;
 			}
 			pthread_mutex_lock(p->mutex_list->r_t);

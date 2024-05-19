@@ -18,9 +18,9 @@ static void job_one(t_setting *set, t_ready_queue *ready_queue, int *running_id)
 
     if (ready_queue->next != NULL) {
         printf("\nready_queue list : \n");
-        printf("id : ");
+        printf("id : \n");
         for (temp = ready_queue->next; temp != NULL; temp = temp->next) {
-            printf("%d, ", temp->id);
+            printf("%d, %d\n", temp->id, temp->remaining_time);
 
             // Check for remaining_time and choose the shortest one
             if (temp->remaining_time < shortest_remaining_time) {
@@ -61,7 +61,8 @@ static void job_one(t_setting *set, t_ready_queue *ready_queue, int *running_id)
 static void job_two_c(t_setting *set, int running_id) {
     if (running_id == -1) {
         pthread_mutex_lock(set->mutex_list->p);
-        printf("%ds : no process\n", set->values->time);
+		if (set->counter != set->total_process_count)
+			printf("%ds : no process\n", set->values->time);
         pthread_mutex_unlock(set->mutex_list->p);
         pthread_mutex_lock(set->mutex_list->t);
         set->values->time++;
@@ -72,6 +73,25 @@ static void job_two_c(t_setting *set, int running_id) {
     pthread_mutex_lock(set->mutex_list->r_t);
     int remaining_time = set->values->remaining_time;
     pthread_mutex_unlock(set->mutex_list->r_t);
+
+	if (remaining_time == -1) {
+		printf("delete\n");
+		pthread_mutex_lock(set->mutex_list->ready_queue);
+        t_ready_queue *prev = set->values->ready_queue;
+        t_ready_queue *curr = prev->next;
+        while (curr != NULL) {
+            if (curr->id == running_id) {
+                prev->next = curr->next;
+                free(curr);
+                break;
+            }
+            prev = curr;
+            curr = curr->next;
+        }
+        pthread_mutex_unlock(set->mutex_list->ready_queue);
+		set->counter++;
+		return ;
+	}
 
     if (remaining_time == 0) {
         pthread_mutex_lock(set->mutex_list->p);
@@ -87,20 +107,15 @@ static void job_two_c(t_setting *set, int running_id) {
         pthread_mutex_lock(set->mutex_list->r_t);
         set->values->remaining_time = -1;
         pthread_mutex_unlock(set->mutex_list->r_t);
-        set->counter++;
-
-        // Remove finished process from ready_queue
-        pthread_mutex_lock(set->mutex_list->ready_queue);
-        t_ready_queue *prev = set->values->ready_queue;
-        t_ready_queue *curr = prev->next;
-        while (curr != NULL) {
-            if (curr->id == running_id) {
-                prev->next = curr->next;
-                free(curr);
+        // set->counter++;
+		pthread_mutex_lock(set->mutex_list->ready_queue);
+        t_ready_queue *temp = set->values->ready_queue->next;
+        while (temp != NULL) {
+            if (temp->id == running_id) {
+                temp->remaining_time--;
                 break;
             }
-            prev = curr;
-            curr = curr->next;
+            temp = temp->next;
         }
         pthread_mutex_unlock(set->mutex_list->ready_queue);
     } else {
@@ -123,11 +138,10 @@ static void job_two_c(t_setting *set, int running_id) {
             temp = temp->next;
         }
         pthread_mutex_unlock(set->mutex_list->ready_queue);
-
-        pthread_mutex_lock(set->mutex_list->r_t);
-        set->values->remaining_time--;
-        pthread_mutex_unlock(set->mutex_list->r_t);
     }
+	// pthread_mutex_lock(set->mutex_list->r_t);
+    // set->values->remaining_time--;
+    // pthread_mutex_unlock(set->mutex_list->r_t);
 }
 
 void *srtf(void *arg) {
@@ -142,7 +156,7 @@ void *srtf(void *arg) {
 
     printf("SRTF scheduling\n");
     while (1) {
-        if (set->counter == set->total_process_count || set->values->remain_thread_count == 0) {
+        if (set->values->remain_thread_count == 0) {
             break;
         }
         wait_routine(set);
@@ -156,6 +170,9 @@ void *srtf(void *arg) {
         job_two_c(set, running_id);
 
         exit_routine(set);
+		if (set->values->remain_thread_count == 0) {
+            break;
+        }
     }
     pthread_mutex_lock(set->mutex_list->p);
     printf("SRTF scheduling end\n");
