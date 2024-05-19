@@ -7,9 +7,9 @@
 static void create_scheduler(t_setting *setting, int mode) {
 	if (mode == 1) {
 		pthread_create(&(setting->thread_id), NULL, fcfs, setting);
+	} else if (mode == 2) {
+		pthread_create(&(setting->thread_id), NULL, sjf, setting);
 	}
-	// } else if (mode == 2) {
-	// 	pthread_create(&(setting->thread_id), NULL, sjf, setting);
 	// } else if (mode == 3) {
 	// 	pthread_create(&(setting->thread_id), NULL, round_robin, setting);
 	// } else if (mode == 4) {

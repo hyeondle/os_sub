@@ -4,7 +4,7 @@
 # include <pthread.h>
 
 # ifndef CONTEXT_SWITCH
-#  define CONTEXT_SWITCH 1
+#  define CONTEXT_SWITCH 0
 # endif
 # ifndef QUANTUM
 #  define QUANTUM 5

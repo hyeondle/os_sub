@@ -138,8 +138,9 @@ void	*cycle(void *arg) {
 
 		if (process_on_cpu != p->id) {
 			pthread_mutex_lock(p->mutex_list->cpu);
-			if (p->values->cpu_working == TRUE)
-				p->waiting_time = p->waiting_time + time - prev_time;
+			if (p->values->cpu_working == TRUE && p->submitted == TRUE) {
+				p->waiting_time = p->waiting_time + (time - prev_time);
+			}
 			pthread_mutex_unlock(p->mutex_list->cpu);
 		} else {
 			if (p->response_time == -1) {
