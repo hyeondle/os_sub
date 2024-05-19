@@ -68,7 +68,7 @@ static void job_one(t_setting *set, t_ready_queue *ready_queue) {
         pthread_mutex_unlock(set->mutex_list->t);
     }
 }
-
+/*
 static void job_two(t_setting *set, int running_id) {
 	int remaining_time = -1;
 
@@ -100,15 +100,12 @@ static void job_two(t_setting *set, int running_id) {
 		pthread_mutex_lock(set->mutex_list->t);
 		set->values->time++;
 		pthread_mutex_unlock(set->mutex_list->t);
-		// pthread_mutex_lock(set->mutex_list->p);
-		// printf("%ds : %d running, %d remaining\n", set->values->time, running_id, remaining_time);
-		// pthread_mutex_unlock(set->mutex_list->p);
 		pthread_mutex_lock(set->mutex_list->r_t);
 		set->values->remaining_time = -1;
 		pthread_mutex_unlock(set->mutex_list->r_t);
 	}
 }
-
+*/
 void *sjf(void *arg) {
 	t_setting	*set;
 	t_ready_queue	*ready_queue;

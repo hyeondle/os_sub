@@ -29,6 +29,9 @@ typedef struct s_fcfs {
 void scheduler(t_setting *setting, t_process *processes, int mode);
 void join_threads(t_setting *setting, t_process *processes);
 void printer(t_process *p, t_state state, int time);
+
+void job_two(t_setting *set, int running_id);
+
 // monitoring thread's f
 void wait_starting(t_setting *set);
 void wait_routine(t_setting *set);
@@ -42,7 +45,7 @@ void	*fcfs(void *arg);
 void	*sjf(void *arg);
 // round_robin.c
 void	*round_robin(void *arg);
-// psjf.c
-void	*psjf(void *arg);
+// srtf.c
+void	*srtf(void *arg);
 
 #endif

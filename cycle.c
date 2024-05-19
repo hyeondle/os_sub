@@ -97,7 +97,6 @@ void	*cycle(void *arg) {
 	int response_time = -1;
 
 	wait_p_starting(p);
-
 	while (1) {
 		if (p->remaining_time == -1) {
 			printf("exit process\n");
@@ -127,6 +126,7 @@ void	*cycle(void *arg) {
 
 			if (time == p->arrival_time) {
 				arrival(p, time);
+				prev_time = time;
 			}
 			exit_p_routine(p);
 			continue;
