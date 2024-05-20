@@ -76,7 +76,7 @@ static void job_two_c(t_setting *set, int running_id, int time) {
     pthread_mutex_unlock(set->mutex_list->r_t);
 
 	if (remaining_time == -1) {
-		printf("%d : Monitor : %d delete\n", time, running_id);
+		printf("%ds : Monitor : %d delete\n", time, running_id);
 		pthread_mutex_lock(set->mutex_list->ready_queue);
         t_ready_queue *prev = set->values->ready_queue;
         t_ready_queue *curr = prev->next;
