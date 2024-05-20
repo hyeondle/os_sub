@@ -169,4 +169,4 @@ void	*cycle(void *arg) {
 	pthread_mutex_unlock(p->mutex_list->p);
 	return (0);
 }
-//waiting time 싱크 안맞는거 고치기
+
