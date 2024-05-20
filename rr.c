@@ -167,7 +167,7 @@ static void job_one(t_setting *set, t_ready_queue **ready_queue, t_ready_queue *
 
     if ((*ready_queue)->next != NULL) {
         pthread_mutex_lock(set->mutex_list->p);
-		printf("%d : Monitor : ready queue list : ", time);
+		printf("%ds : Monitor : ready queue list : ", time);
         for (t_ready_queue *temp = (*ready_queue)->next; temp != NULL; temp = temp->next) {
             printf("%d, ", temp->id);
         }
