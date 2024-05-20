@@ -37,7 +37,7 @@ void scheduler(t_setting *setting, t_process *processes, int mode) {
 void join_threads(t_setting *setting, t_process *processes) {
 	t_process *process;
 	process = processes->next;
-	printf("total:count %d\n", setting->total_process_count);
+
 	for (int i = 0; i < setting->total_process_count; i++) {
 		pthread_join(process->thread_id, NULL);
 		process = process->next;
@@ -85,7 +85,7 @@ void	exit_routine(t_setting *set) {
 	}
 }
 
-void job_two(t_setting *set, int running_id) {
+void job_two(t_setting *set, int running_id, int time) {
 	int remaining_time = -1;
 
 	while (remaining_time == -1) {
@@ -96,7 +96,7 @@ void job_two(t_setting *set, int running_id) {
 
 	if (remaining_time == 0) {
 		pthread_mutex_lock(set->mutex_list->p);
-		printf("%ds : %d finished\n", set->values->time, running_id);
+		printf("%ds : Monitor : %d finished\n", set->values->time, running_id);
 		pthread_mutex_unlock(set->mutex_list->p);
 		pthread_mutex_lock(set->mutex_list->cpu);
 		set->values->process_on_cpu = -1;
@@ -110,6 +110,9 @@ void job_two(t_setting *set, int running_id) {
 		pthread_mutex_unlock(set->mutex_list->r_t);
 		set->counter++;
 	} else {
+		pthread_mutex_lock(set->mutex_list->p);
+		printf("%ds : Monitor : %d is working\n", set->values->time, running_id);
+		pthread_mutex_unlock(set->mutex_list->p);
 		pthread_mutex_lock(set->mutex_list->cpu);
 		set->values->cpu_working = TRUE;
 		pthread_mutex_unlock(set->mutex_list->cpu);

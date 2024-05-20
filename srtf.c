@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <limits.h>
 
-static void job_one(t_setting *set, t_ready_queue *ready_queue, int *running_id) {
+static void job_one(t_setting *set, t_ready_queue *ready_queue, int *running_id, int time) {
     t_ready_queue *temp;
     t_ready_queue *shortest_job_prev = NULL;
     t_ready_queue *shortest_job = NULL;
@@ -17,10 +17,10 @@ static void job_one(t_setting *set, t_ready_queue *ready_queue, int *running_id)
     ready_queue = set->values->ready_queue;
 
     if (ready_queue->next != NULL) {
-        printf("\nready_queue list : \n");
-        printf("id : \n");
+        pthread_mutex_lock(set->mutex_list->p);
+        printf("%d : Monitor : ready queue list : ", time);
         for (temp = ready_queue->next; temp != NULL; temp = temp->next) {
-            printf("%d, %d\n", temp->id, temp->remaining_time);
+            printf("%d, ", temp->id);
 
             // Check for remaining_time and choose the shortest one
             if (temp->remaining_time < shortest_remaining_time) {
@@ -36,7 +36,8 @@ static void job_one(t_setting *set, t_ready_queue *ready_queue, int *running_id)
             }
             ready_queue = temp;
         }
-        printf("\n\n");
+        printf("\n");
+        pthread_mutex_unlock(set->mutex_list->p);
 
         if (shortest_job != NULL) {
             id = shortest_job->id;
@@ -48,9 +49,9 @@ static void job_one(t_setting *set, t_ready_queue *ready_queue, int *running_id)
 
             pthread_mutex_lock(set->mutex_list->p);
 			if (*running_id != id && *running_id != -1)
-				printf("%ds : %d switched out\n", set->values->time, *running_id);
+				printf("%ds : Monitor : %d switched out\n", set->values->time, *running_id);
 			if (shortest_job->remaining_time != 0)
-				printf("%ds : %d loaded on cpu\n", set->values->time, id);
+				printf("%ds : Monitor : %d loaded on cpu\n", set->values->time, id);
             pthread_mutex_unlock(set->mutex_list->p);
         }
     }
@@ -58,11 +59,11 @@ static void job_one(t_setting *set, t_ready_queue *ready_queue, int *running_id)
 	*running_id = id;
 }
 
-static void job_two_c(t_setting *set, int running_id) {
+static void job_two_c(t_setting *set, int running_id, int time) {
     if (running_id == -1) {
         pthread_mutex_lock(set->mutex_list->p);
 		if (set->counter != set->total_process_count)
-			printf("%ds : no process\n", set->values->time);
+			printf("%ds : Monitor : no process\n", set->values->time);
         pthread_mutex_unlock(set->mutex_list->p);
         pthread_mutex_lock(set->mutex_list->t);
         set->values->time++;
@@ -75,7 +76,7 @@ static void job_two_c(t_setting *set, int running_id) {
     pthread_mutex_unlock(set->mutex_list->r_t);
 
 	if (remaining_time == -1) {
-		printf("delete\n");
+		printf("%d : Monitor : %d delete\n", time, running_id);
 		pthread_mutex_lock(set->mutex_list->ready_queue);
         t_ready_queue *prev = set->values->ready_queue;
         t_ready_queue *curr = prev->next;
@@ -95,7 +96,7 @@ static void job_two_c(t_setting *set, int running_id) {
 
     if (remaining_time == 0) {
         pthread_mutex_lock(set->mutex_list->p);
-        printf("%ds : %d finished\n", set->values->time, running_id);
+        printf("%ds : Monitor : %d finished\n", set->values->time, running_id);
         pthread_mutex_unlock(set->mutex_list->p);
         pthread_mutex_lock(set->mutex_list->cpu);
         set->values->process_on_cpu = -1;
@@ -119,6 +120,9 @@ static void job_two_c(t_setting *set, int running_id) {
         }
         pthread_mutex_unlock(set->mutex_list->ready_queue);
     } else {
+        pthread_mutex_lock(set->mutex_list->p);
+        printf("%ds : Monitor : %d is working\n", set->values->time, running_id);
+        pthread_mutex_unlock(set->mutex_list->p);
         pthread_mutex_lock(set->mutex_list->cpu);
         set->values->cpu_working = TRUE;
         set->values->process_on_cpu = running_id;
@@ -148,9 +152,11 @@ void *srtf(void *arg) {
     t_setting *set;
     t_ready_queue *ready_queue;
     int running_id = -1;
+    int time;
 
     set = (t_setting *)arg;
     ready_queue = NULL;
+    time = 0;
 
     wait_starting(set);
 
@@ -165,9 +171,12 @@ void *srtf(void *arg) {
         pthread_mutex_lock(set->mutex_list->cpu);
 		running_id = set->values->process_on_cpu;
 		pthread_mutex_unlock(set->mutex_list->cpu);
+        pthread_mutex_lock(set->mutex_list->t);
+        time = set->values->time;
+        pthread_mutex_unlock(set->mutex_list->t);
 
-        job_one(set, ready_queue, &running_id);
-        job_two_c(set, running_id);
+        job_one(set, ready_queue, &running_id, time);
+        job_two_c(set, running_id, time);
 
         exit_routine(set);
 		if (set->values->remain_thread_count == 0) {

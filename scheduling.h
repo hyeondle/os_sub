@@ -30,7 +30,7 @@ void scheduler(t_setting *setting, t_process *processes, int mode);
 void join_threads(t_setting *setting, t_process *processes);
 void printer(t_process *p, t_state state, int time);
 
-void job_two(t_setting *set, int running_id);
+void job_two(t_setting *set, int running_id, int time);
 
 // monitoring thread's f
 void wait_starting(t_setting *set);

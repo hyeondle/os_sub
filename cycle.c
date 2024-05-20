@@ -46,7 +46,7 @@ void arrival(t_process *process, int time) {
 
 	process->submitted = TRUE;
 	pthread_mutex_lock(process->mutex_list->p);
-	printf("%ds : Process %d submitted\n", time, process->id);
+	printf("%ds : Process %d is submitted\n", time, process->id);
 	pthread_mutex_unlock(process->mutex_list->p);
 }
 
@@ -140,13 +140,15 @@ void	*cycle(void *arg) {
 			pthread_mutex_lock(p->mutex_list->cpu);
 			if (p->values->cpu_working == TRUE && p->submitted == TRUE) {
 				p->waiting_time = p->waiting_time + (time - prev_time);
+				pthread_mutex_lock(p->mutex_list->p);
+				printf("%ds : Process %d is waiting\n", time, p->id);
+				pthread_mutex_unlock(p->mutex_list->p);
 			}
 			pthread_mutex_unlock(p->mutex_list->cpu);
 		} else {
 			if (p->response_time == -1) {
 				pthread_mutex_lock(p->mutex_list->p);
-				printf("Process %d is running\n", p->id);
-				printf("Burst Time: %d\n", p->burst_time);
+				printf("%ds : Process %d is running\n", time, p->id);
 				pthread_mutex_unlock(p->mutex_list->p);
 				p->response_time = time - p->arrival_time;
 			}
@@ -162,10 +164,10 @@ void	*cycle(void *arg) {
 	}
 
 	pthread_mutex_lock(p->mutex_list->p);
-	printf("Process %d Terminated\n", p->id);
-	printf("Waiting Time: %d\n", p->waiting_time);
-	printf("Turnaround Time: %d\n", p->turnaround_time);
-	printf("Response Time: %d\n", p->response_time);
+	printf("Process_ %d Terminated\n", p->id);
+	printf("Process_ %d Waiting Time ; %d\n", p->id, p->waiting_time);
+	printf("Process_ %d Turnaround Time : %d\n", p->id, p->turnaround_time);
+	printf("Process_ %d Response Time : %d\n", p->id, p->response_time);
 	pthread_mutex_unlock(p->mutex_list->p);
 	return (0);
 }
