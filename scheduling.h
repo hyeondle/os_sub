@@ -47,5 +47,6 @@ void	*sjf(void *arg);
 void	*round_robin(void *arg);
 // srtf.c
 void	*srtf(void *arg);
-
+// lrrwp.c
+void	*lrrwp(void *arg);
 #endif

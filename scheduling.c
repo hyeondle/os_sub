@@ -13,6 +13,11 @@ static void create_scheduler(t_setting *setting, int mode) {
 		pthread_create(&(setting->thread_id), NULL, srtf, setting);
 	} else if (mode == 4) {
 		pthread_create(&(setting->thread_id), NULL, round_robin, setting);
+	} else if (mode == 5) {
+		pthread_create(&(setting->thread_id), NULL, lrrwp, setting);
+	} else {
+		fprintf(stderr, "Error: Invalid mode\n");
+		exit(1);
 	}
 }
 
