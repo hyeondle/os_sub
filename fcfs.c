@@ -117,7 +117,7 @@ void	*fcfs(void *arg) {
 		if (running_id == -1) {
 			job_one(set, ready_queue, time);
 		} else {
-			job_two(set, running_id, time);
+			job_two(set, running_id);
 		}
 		exit_routine(set);
 	}

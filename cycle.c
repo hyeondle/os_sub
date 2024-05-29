@@ -94,7 +94,6 @@ void	*cycle(void *arg) {
 	int time = -1;
 	int prev_time = 0;
 	int process_on_cpu = 0;
-	int response_time = -1;
 
 	wait_p_starting(p);
 	while (1) {

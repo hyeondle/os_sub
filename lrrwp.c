@@ -206,7 +206,6 @@ void *lrrwp(void *arg) {
 	int execution_time = 0;
 	int remain_thread_count;
 	int time = 0;
-	int cap = 0;
 
 	set = (t_setting *)arg;
 	ready_queue = NULL;

@@ -89,7 +89,7 @@ void	exit_routine(t_setting *set) {
 	}
 }
 
-void job_two(t_setting *set, int running_id, int time) {
+void job_two(t_setting *set, int running_id) {
 	int remaining_time = -1;
 
 	while (remaining_time == -1) {

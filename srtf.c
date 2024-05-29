@@ -8,7 +8,7 @@
 
 static void job_one(t_setting *set, t_ready_queue *ready_queue, int *running_id, int time) {
     t_ready_queue *temp;
-    t_ready_queue *shortest_job_prev = NULL;
+    // t_ready_queue *shortest_job_prev = NULL;
     t_ready_queue *shortest_job = NULL;
     int shortest_remaining_time = INT_MAX;
     int id = -1;
@@ -25,12 +25,12 @@ static void job_one(t_setting *set, t_ready_queue *ready_queue, int *running_id,
             // Check for remaining_time and choose the shortest one
             if (temp->remaining_time < shortest_remaining_time) {
                 shortest_remaining_time = temp->remaining_time;
-                shortest_job_prev = ready_queue;
+                // shortest_job_prev = ready_queue;
                 shortest_job = temp;
             } else if (temp->remaining_time == shortest_remaining_time) {
                 // If the remaining times are the same, keep the previous job
                 if (shortest_job == NULL || temp->arrival_time < shortest_job->arrival_time) {
-                    shortest_job_prev = ready_queue;
+                    // shortest_job_prev = ready_queue;
                     shortest_job = temp;
                 }
             }
