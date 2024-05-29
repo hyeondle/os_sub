@@ -1,4 +1,5 @@
 NAME	=	scheduler
+
 SOURCES	=	main.c\
 			init.c\
 			scheduling.c\
@@ -16,8 +17,12 @@ OBJECTS	=	$(SOURCES:.c=.o)
 CC		=	gcc
 CFLAGS	=	-Wall -Wextra -Werror
 
+CONTEXT_SWITCH ?= 0
+QUANTUM ?= 20
+RQ_SIZE ?= 3
+
 .c.o	:
-			$(CC) $(CFLAGS) -c $< -o $(<:.c=.o) -I ./
+			$(CC) $(CFLAGS) -DCONTEXT_SWITCH=$(CONTEXT_SWITCH) -DQUANTUM=$(QUANTUM) -DRQ_SIZE=$(RQ_SIZE) -c $< -o $(<:.c=.o) -I ./
 
 all		:	$(NAME)
 
