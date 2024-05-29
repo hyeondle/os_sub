@@ -6,8 +6,13 @@
 # ifndef CONTEXT_SWITCH
 #  define CONTEXT_SWITCH 0
 # endif
+
 # ifndef QUANTUM
 #  define QUANTUM 20
+# endif
+
+# ifndef RQ_SIZE
+#  define RQ_SIZE 3
 # endif
 
 typedef enum e_bool {

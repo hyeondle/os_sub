@@ -207,9 +207,9 @@ static void job_two_c(t_setting *set, int running_id, t_ready_queue **job, int t
 	int flag = 0;
 
     while (remaining_time == -1) {
-        pthread_mutex_lock(set->mutex_list->t);
+        pthread_mutex_lock(set->mutex_list->r_t);
         remaining_time = set->values->remaining_time;
-        pthread_mutex_unlock(set->mutex_list->t);
+        pthread_mutex_unlock(set->mutex_list->r_t);
     }
 
     if (remaining_time == 0) {
@@ -233,7 +233,7 @@ static void job_two_c(t_setting *set, int running_id, t_ready_queue **job, int t
 
     } else {
 		pthread_mutex_lock(set->mutex_list->p);
-		printf("%ds : Monitor : %d is working\n", set->values->time, running_id);
+		printf("%ds : Monitor : %d is working\n", time, running_id);
 		pthread_mutex_unlock(set->mutex_list->p);
         pthread_mutex_lock(set->mutex_list->cpu);
         set->values->cpu_working = TRUE;
@@ -251,6 +251,7 @@ static void job_two_c(t_setting *set, int running_id, t_ready_queue **job, int t
 		if (flag == 1) {
 			pthread_mutex_lock(set->mutex_list->cpu);
 			set->values->process_on_cpu = -1;
+            set->values->cpu_working = FALSE;
 			pthread_mutex_unlock(set->mutex_list->cpu);
 		}
     }
@@ -260,6 +261,7 @@ void *round_robin(void *arg) {
     t_setting *set;
     t_ready_queue *ready_queue;
     t_ready_queue *job;
+    int remain_thread_count;
     int running_id = -2;
     int execution_time = 0;
 	int time = 0;
@@ -273,7 +275,10 @@ void *round_robin(void *arg) {
 
     printf("round_robin start\n");
     while (1) {
-        if (set->values->remain_thread_count == 0 || set->counter == set->total_process_count) {
+        pthread_mutex_lock(set->mutex_list->check);
+        remain_thread_count = set->values->remain_thread_count;
+        pthread_mutex_unlock(set->mutex_list->check);
+        if (remain_thread_count == 0 || set->counter == set->total_process_count) {
             break;
         }
         wait_routine(set);
