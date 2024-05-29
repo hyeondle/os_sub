@@ -110,6 +110,7 @@ static void job_two(t_setting *set, int running_id) {
 void *sjf(void *arg) {
 	t_setting	*set;
 	t_ready_queue	*ready_queue;
+	int remain_thread_count;
 	int	running_id;
 	int time;
 
@@ -121,7 +122,10 @@ void *sjf(void *arg) {
 
 	printf("sjf start\n");
 	while(1) {
-		if (set->counter == set->total_process_count || set->values->remain_thread_count == 0) {
+		pthread_mutex_lock(set->mutex_list->check);
+		remain_thread_count = set->values->remain_thread_count;
+		pthread_mutex_unlock(set->mutex_list->check);
+		if (set->counter == set->total_process_count || remain_thread_count == 0) {
 			break;
 		}
 		wait_routine(set);

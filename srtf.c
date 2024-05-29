@@ -43,10 +43,11 @@ static void job_one(t_setting *set, t_ready_queue *ready_queue, int *running_id,
             id = shortest_job->id;
             pthread_mutex_lock(set->mutex_list->cpu);
             set->values->process_on_cpu = id;
-            set->values->remaining_time = shortest_job->remaining_time;
             set->values->cpu_working = TRUE;
             pthread_mutex_unlock(set->mutex_list->cpu);
-
+            pthread_mutex_lock(set->mutex_list->r_t);
+            set->values->remaining_time = shortest_job->remaining_time;
+            pthread_mutex_unlock(set->mutex_list->r_t);
             pthread_mutex_lock(set->mutex_list->p);
 			if (*running_id != id && *running_id != -1)
 				printf("%ds : Monitor : %d switched out\n", set->values->time, *running_id);
@@ -152,6 +153,7 @@ void *srtf(void *arg) {
     t_setting *set;
     t_ready_queue *ready_queue;
     int running_id = -1;
+    int remain_thread_count;
     int time;
 
     set = (t_setting *)arg;
@@ -162,7 +164,10 @@ void *srtf(void *arg) {
 
     printf("SRTF scheduling\n");
     while (1) {
-        if (set->values->remain_thread_count == 0) {
+        pthread_mutex_lock(set->mutex_list->check);
+        remain_thread_count = set->values->remain_thread_count;
+        pthread_mutex_unlock(set->mutex_list->check);
+        if (remain_thread_count == 0) {
             break;
         }
         wait_routine(set);
@@ -179,7 +184,7 @@ void *srtf(void *arg) {
         job_two_c(set, running_id, time);
 
         exit_routine(set);
-		if (set->values->remain_thread_count == 0) {
+		if (remain_thread_count == 0) {
             break;
         }
     }
