@@ -1,0 +1,1172 @@
+6 thread will be created
+process count: 6
+fcfs start
+0s : Process 2 is submitted
+0s : Process 3 is submitted
+0s : Process 1 is submitted
+0s : Monitor : ready queue list : 2, 3, 1, 
+0s : Monitor : 2 loaded on cpu
+0s : Process 2 is running
+0s : Monitor : 2 is working
+1s : Process 1 is waiting
+1s : Process 3 is waiting
+1s : Monitor : 2 is working
+2s : Process 3 is waiting
+2s : Process 1 is waiting
+2s : Monitor : 2 is working
+3s : Process 1 is waiting
+3s : Process 3 is waiting
+3s : Monitor : 2 is working
+4s : Process 1 is waiting
+4s : Process 3 is waiting
+4s : Monitor : 2 is working
+5s : Process 4 is submitted
+5s : Process 1 is waiting
+5s : Process 3 is waiting
+5s : Process 5 is submitted
+5s : Process 6 is submitted
+5s : Monitor : 2 is working
+6s : Process 3 is waiting
+6s : Process 1 is waiting
+6s : Process 5 is waiting
+6s : Process 6 is waiting
+6s : Process 4 is waiting
+6s : Monitor : 2 is working
+7s : Process 5 is waiting
+7s : Process 4 is waiting
+7s : Process 6 is waiting
+7s : Process 3 is waiting
+7s : Process 1 is waiting
+7s : Monitor : 2 is working
+8s : Process 6 is waiting
+8s : Process 5 is waiting
+8s : Process 1 is waiting
+8s : Process 3 is waiting
+8s : Process 4 is waiting
+8s : Monitor : 2 is working
+9s : Process 5 is waiting
+9s : Process 1 is waiting
+9s : Process 4 is waiting
+9s : Process 3 is waiting
+9s : Process 6 is waiting
+9s : Monitor : 2 is working
+10s : Process 6 is waiting
+10s : Process 5 is waiting
+10s : Process 3 is waiting
+10s : Process 4 is waiting
+10s : Process 1 is waiting
+10s : Monitor : 2 is working
+11s : Process 1 is waiting
+11s : Process 3 is waiting
+11s : Process 4 is waiting
+11s : Process 5 is waiting
+11s : Process 6 is waiting
+11s : Monitor : 2 is working
+12s : Process 3 is waiting
+12s : Process 1 is waiting
+12s : Process 4 is waiting
+12s : Process 6 is waiting
+12s : Process 5 is waiting
+12s : Monitor : 2 is working
+13s : Process 3 is waiting
+13s : Process 5 is waiting
+13s : Process 4 is waiting
+13s : Process 1 is waiting
+13s : Process 6 is waiting
+13s : Monitor : 2 is working
+14s : Process 6 is waiting
+14s : Process 1 is waiting
+14s : Process 3 is waiting
+14s : Process 5 is waiting
+14s : Process 4 is waiting
+14s : Monitor : 2 is working
+15s : Process 4 is waiting
+15s : Process 1 is waiting
+15s : Process 3 is waiting
+15s : Process 5 is waiting
+15s : Process 6 is waiting
+15s : Monitor : 2 is working
+16s : Process 6 is waiting
+16s : Process 1 is waiting
+16s : Process 4 is waiting
+16s : Process 5 is waiting
+16s : Process 3 is waiting
+16s : Monitor : 2 is working
+17s : Process 3 is waiting
+17s : Process 1 is waiting
+17s : Process 4 is waiting
+17s : Process 5 is waiting
+17s : Process 6 is waiting
+17s : Monitor : 2 is working
+18s : Process 1 is waiting
+18s : Process 3 is waiting
+18s : Process 5 is waiting
+18s : Process 6 is waiting
+18s : Process 4 is waiting
+18s : Monitor : 2 is working
+19s : Process 6 is waiting
+19s : Process 1 is waiting
+19s : Process 4 is waiting
+19s : Process 5 is waiting
+19s : Process 3 is waiting
+19s : Monitor : 2 is working
+20s : Process 1 is waiting
+20s : Process 5 is waiting
+20s : Process 4 is waiting
+20s : Process 3 is waiting
+20s : Process 6 is waiting
+20s : Monitor : 2 is working
+21s : Process 1 is waiting
+21s : Process 5 is waiting
+21s : Process 4 is waiting
+21s : Process 6 is waiting
+21s : Process 3 is waiting
+21s : Monitor : 2 is working
+22s : Process 3 is waiting
+22s : Process 5 is waiting
+22s : Process 4 is waiting
+22s : Process 6 is waiting
+22s : Process 1 is waiting
+22s : Monitor : 2 is working
+23s : Process 3 is waiting
+23s : Process 4 is waiting
+23s : Process 5 is waiting
+23s : Process 6 is waiting
+23s : Process 1 is waiting
+23s : Monitor : 2 is working
+24s : Process 4 is waiting
+24s : Process 1 is waiting
+24s : Process 6 is waiting
+24s : Process 5 is waiting
+24s : Process 3 is waiting
+24s : Monitor : 2 is working
+25s : Process 1 is waiting
+25s : Process 6 is waiting
+25s : Process 4 is waiting
+25s : Process 3 is waiting
+25s : Process 5 is waiting
+25s : Monitor : 2 is working
+26s : Process 1 is waiting
+26s : Process 3 is waiting
+26s : Process 6 is waiting
+26s : Process 4 is waiting
+26s : Process 5 is waiting
+26s : Monitor : 2 is working
+27s : Process 6 is waiting
+27s : Process 1 is waiting
+27s : Process 3 is waiting
+27s : Process 5 is waiting
+27s : Process 4 is waiting
+27s : Monitor : 2 is working
+28s : Process 4 is waiting
+28s : Process 1 is waiting
+28s : Process 3 is waiting
+28s : Process 6 is waiting
+28s : Process 5 is waiting
+28s : Monitor : 2 is working
+29s : Process 3 is waiting
+29s : Process 5 is waiting
+29s : Process 4 is waiting
+29s : Process 1 is waiting
+29s : Process 6 is waiting
+29s : Monitor : 2 is working
+30s : Process 6 is waiting
+30s : Process 3 is waiting
+30s : Process 4 is waiting
+30s : Process 5 is waiting
+30s : Process 1 is waiting
+30s : Monitor : 2 is working
+31s : Process 1 is waiting
+31s : Process 5 is waiting
+31s : Process 3 is waiting
+31s : Process 6 is waiting
+31s : Process 4 is waiting
+31s : Monitor : 2 is working
+32s : Process 4 is waiting
+32s : Process 1 is waiting
+32s : Process 6 is waiting
+32s : Process 3 is waiting
+32s : Process 5 is waiting
+32s : Monitor : 2 is working
+33s : Process 4 is waiting
+33s : Process 1 is waiting
+33s : Process 6 is waiting
+33s : Process 5 is waiting
+33s : Process 3 is waiting
+33s : Monitor : 2 is working
+34s : Process 3 is waiting
+34s : Process 5 is waiting
+34s : Process 4 is waiting
+34s : Process 1 is waiting
+34s : Process 6 is waiting
+34s : Monitor : 2 is working
+35s : Process 4 is waiting
+35s : Process 5 is waiting
+35s : Process 3 is waiting
+35s : Process 1 is waiting
+35s : Process 6 is waiting
+35s : Monitor : 2 is working
+36s : Process 5 is waiting
+36s : Process 3 is waiting
+36s : Process 4 is waiting
+36s : Process 6 is waiting
+36s : Process 1 is waiting
+36s : Monitor : 2 is working
+37s : Process 6 is waiting
+37s : Process 4 is waiting
+37s : Process 5 is waiting
+37s : Process 1 is waiting
+37s : Process 3 is waiting
+37s : Monitor : 2 is working
+38s : Process 6 is waiting
+38s : Process 4 is waiting
+38s : Process 1 is waiting
+38s : Process 5 is waiting
+38s : Process 3 is waiting
+38s : Monitor : 2 is working
+39s : Process 4 is waiting
+39s : Process 6 is waiting
+39s : Process 5 is waiting
+39s : Process 3 is waiting
+39s : Process 1 is waiting
+39s : Monitor : 2 is working
+40s : Process 4 is waiting
+40s : Process 6 is waiting
+40s : Process 3 is waiting
+40s : Process 1 is waiting
+40s : Process 5 is waiting
+40s : Monitor : 2 is working
+41s : Process 5 is waiting
+41s : Process 6 is waiting
+41s : Process 4 is waiting
+41s : Process 3 is waiting
+41s : Process 1 is waiting
+41s : Monitor : 2 is working
+42s : Process 6 is waiting
+42s : Process 4 is waiting
+42s : Process 3 is waiting
+42s : Process 5 is waiting
+42s : Process 1 is waiting
+42s : Monitor : 2 is working
+43s : Process 1 is waiting
+43s : Process 5 is waiting
+43s : Process 4 is waiting
+43s : Process 3 is waiting
+43s : Process 6 is waiting
+43s : Monitor : 2 is working
+44s : Process 3 is waiting
+44s : Process 5 is waiting
+44s : Process 6 is waiting
+44s : Process 4 is waiting
+44s : Process 1 is waiting
+44s : Monitor : 2 is working
+45s : Process 4 is waiting
+45s : Process 3 is waiting
+45s : Process 5 is waiting
+45s : Process 1 is waiting
+45s : Process 6 is waiting
+45s : Monitor : 2 is working
+46s : Process 1 is waiting
+46s : Process 4 is waiting
+46s : Process 3 is waiting
+46s : Process 6 is waiting
+46s : Process 5 is waiting
+46s : Monitor : 2 is working
+47s : Process 6 is waiting
+47s : Process 3 is waiting
+47s : Process 4 is waiting
+47s : Process 5 is waiting
+47s : Process 1 is waiting
+47s : Monitor : 2 is working
+48s : Process 1 is waiting
+48s : Process 3 is waiting
+48s : Process 6 is waiting
+48s : Process 4 is waiting
+48s : Process 5 is waiting
+48s : Monitor : 2 is working
+49s : Process 4 is waiting
+49s : Process 6 is waiting
+49s : Process 3 is waiting
+49s : Process 1 is waiting
+49s : Process 5 is waiting
+49s : Monitor : 2 is working
+50s : Process 3 is waiting
+50s : Process 4 is waiting
+50s : Process 6 is waiting
+50s : Process 1 is waiting
+50s : Process 5 is waiting
+50s : Monitor : 2 is working
+51s : Process 1 is waiting
+51s : Process 5 is waiting
+51s : Process 6 is waiting
+51s : Process 3 is waiting
+51s : Process 4 is waiting
+51s : Monitor : 2 is working
+52s : Process 5 is waiting
+52s : Process 6 is waiting
+52s : Process 1 is waiting
+52s : Process 3 is waiting
+52s : Process 4 is waiting
+52s : Monitor : 2 is working
+53s : Process 3 is waiting
+53s : Process 5 is waiting
+53s : Process 6 is waiting
+53s : Process 4 is waiting
+53s : Process 1 is waiting
+53s : Monitor : 2 is working
+54s : Process 3 is waiting
+54s : Process 6 is waiting
+54s : Process 5 is waiting
+54s : Process 4 is waiting
+54s : Process 1 is waiting
+54s : Monitor : 2 is working
+55s : Process 4 is waiting
+55s : Process 1 is waiting
+55s : Process 6 is waiting
+55s : Process 5 is waiting
+55s : Process 3 is waiting
+55s : Monitor : 2 is working
+56s : Process 4 is waiting
+56s : Process 1 is waiting
+56s : Process 5 is waiting
+56s : Process 3 is waiting
+56s : Process 6 is waiting
+56s : Monitor : 2 is working
+57s : Process 6 is waiting
+57s : Process 1 is waiting
+57s : Process 4 is waiting
+57s : Process 5 is waiting
+57s : Process 3 is waiting
+57s : Monitor : 2 is working
+58s : Process 5 is waiting
+58s : Process 4 is waiting
+58s : Process 6 is waiting
+58s : Process 1 is waiting
+58s : Process 3 is waiting
+58s : Monitor : 2 is working
+59s : Process 4 is waiting
+59s : Process 1 is waiting
+59s : Process 5 is waiting
+59s : Process 6 is waiting
+59s : Process 3 is waiting
+59s : Monitor : 2 is working
+60s : Process 1 is waiting
+60s : Process 5 is waiting
+60s : Process 3 is waiting
+60s : Process 4 is waiting
+60s : Process 6 is waiting
+60s : Monitor : 2 finished
+exit process
+Process_ 2 Terminated
+Process_ 2 Waiting Time ; 0
+Process_ 2 Turnaround Time : 60
+Process_ 2 Response Time : 0
+60s : Monitor : ready queue list : 3, 1, 4, 5, 6, 
+60s : Monitor : 3 loaded on cpu
+60s : Process 3 is running
+60s : Monitor : 3 is working
+61s : Process 4 is waiting
+61s : Process 1 is waiting
+61s : Process 5 is waiting
+61s : Process 6 is waiting
+61s : Monitor : 3 is working
+62s : Process 5 is waiting
+62s : Process 6 is waiting
+62s : Process 1 is waiting
+62s : Process 4 is waiting
+62s : Monitor : 3 is working
+63s : Process 1 is waiting
+63s : Process 5 is waiting
+63s : Process 4 is waiting
+63s : Process 6 is waiting
+63s : Monitor : 3 is working
+64s : Process 1 is waiting
+64s : Process 6 is waiting
+64s : Process 5 is waiting
+64s : Process 4 is waiting
+64s : Monitor : 3 is working
+65s : Process 6 is waiting
+65s : Process 1 is waiting
+65s : Process 5 is waiting
+65s : Process 4 is waiting
+65s : Monitor : 3 is working
+66s : Process 1 is waiting
+66s : Process 5 is waiting
+66s : Process 4 is waiting
+66s : Process 6 is waiting
+66s : Monitor : 3 is working
+67s : Process 5 is waiting
+67s : Process 4 is waiting
+67s : Process 1 is waiting
+67s : Process 6 is waiting
+67s : Monitor : 3 is working
+68s : Process 6 is waiting
+68s : Process 1 is waiting
+68s : Process 5 is waiting
+68s : Process 4 is waiting
+68s : Monitor : 3 is working
+69s : Process 5 is waiting
+69s : Process 6 is waiting
+69s : Process 1 is waiting
+69s : Process 4 is waiting
+69s : Monitor : 3 is working
+70s : Process 4 is waiting
+70s : Process 6 is waiting
+70s : Process 5 is waiting
+70s : Process 1 is waiting
+70s : Monitor : 3 is working
+71s : Process 4 is waiting
+71s : Process 6 is waiting
+71s : Process 1 is waiting
+71s : Process 5 is waiting
+71s : Monitor : 3 is working
+72s : Process 4 is waiting
+72s : Process 1 is waiting
+72s : Process 6 is waiting
+72s : Process 5 is waiting
+72s : Monitor : 3 is working
+73s : Process 4 is waiting
+73s : Process 1 is waiting
+73s : Process 5 is waiting
+73s : Process 6 is waiting
+73s : Monitor : 3 is working
+74s : Process 1 is waiting
+74s : Process 6 is waiting
+74s : Process 4 is waiting
+74s : Process 5 is waiting
+74s : Monitor : 3 is working
+75s : Process 5 is waiting
+75s : Process 6 is waiting
+75s : Process 4 is waiting
+75s : Process 1 is waiting
+75s : Monitor : 3 is working
+76s : Process 1 is waiting
+76s : Process 5 is waiting
+76s : Process 6 is waiting
+76s : Process 4 is waiting
+76s : Monitor : 3 is working
+77s : Process 4 is waiting
+77s : Process 5 is waiting
+77s : Process 1 is waiting
+77s : Process 6 is waiting
+77s : Monitor : 3 is working
+78s : Process 1 is waiting
+78s : Process 5 is waiting
+78s : Process 6 is waiting
+78s : Process 4 is waiting
+78s : Monitor : 3 is working
+79s : Process 6 is waiting
+79s : Process 4 is waiting
+79s : Process 1 is waiting
+79s : Process 5 is waiting
+79s : Monitor : 3 is working
+80s : Process 5 is waiting
+80s : Process 1 is waiting
+80s : Process 4 is waiting
+80s : Process 6 is waiting
+80s : Monitor : 3 is working
+81s : Process 1 is waiting
+81s : Process 5 is waiting
+81s : Process 6 is waiting
+81s : Process 4 is waiting
+81s : Monitor : 3 is working
+82s : Process 5 is waiting
+82s : Process 4 is waiting
+82s : Process 1 is waiting
+82s : Process 6 is waiting
+82s : Monitor : 3 is working
+83s : Process 6 is waiting
+83s : Process 1 is waiting
+83s : Process 5 is waiting
+83s : Process 4 is waiting
+83s : Monitor : 3 is working
+84s : Process 6 is waiting
+84s : Process 5 is waiting
+84s : Process 1 is waiting
+84s : Process 4 is waiting
+84s : Monitor : 3 is working
+85s : Process 5 is waiting
+85s : Process 6 is waiting
+85s : Process 4 is waiting
+85s : Process 1 is waiting
+85s : Monitor : 3 is working
+86s : Process 1 is waiting
+86s : Process 4 is waiting
+86s : Process 5 is waiting
+86s : Process 6 is waiting
+86s : Monitor : 3 is working
+87s : Process 4 is waiting
+87s : Process 1 is waiting
+87s : Process 5 is waiting
+87s : Process 6 is waiting
+87s : Monitor : 3 is working
+88s : Process 5 is waiting
+88s : Process 4 is waiting
+88s : Process 6 is waiting
+88s : Process 1 is waiting
+88s : Monitor : 3 is working
+89s : Process 5 is waiting
+89s : Process 6 is waiting
+89s : Process 1 is waiting
+89s : Process 4 is waiting
+89s : Monitor : 3 is working
+90s : Process 1 is waiting
+90s : Process 5 is waiting
+90s : Process 4 is waiting
+90s : Process 6 is waiting
+90s : Monitor : 3 is working
+91s : Process 1 is waiting
+91s : Process 4 is waiting
+91s : Process 5 is waiting
+91s : Process 6 is waiting
+91s : Monitor : 3 is working
+92s : Process 6 is waiting
+92s : Process 4 is waiting
+92s : Process 5 is waiting
+92s : Process 1 is waiting
+92s : Monitor : 3 is working
+93s : Process 4 is waiting
+93s : Process 1 is waiting
+93s : Process 6 is waiting
+93s : Process 5 is waiting
+93s : Monitor : 3 is working
+94s : Process 1 is waiting
+94s : Process 5 is waiting
+94s : Process 6 is waiting
+94s : Process 4 is waiting
+94s : Monitor : 3 is working
+95s : Process 5 is waiting
+95s : Process 4 is waiting
+95s : Process 1 is waiting
+95s : Process 6 is waiting
+95s : Monitor : 3 is working
+96s : Process 6 is waiting
+96s : Process 5 is waiting
+96s : Process 1 is waiting
+96s : Process 4 is waiting
+96s : Monitor : 3 is working
+97s : Process 6 is waiting
+97s : Process 4 is waiting
+97s : Process 1 is waiting
+97s : Process 5 is waiting
+97s : Monitor : 3 is working
+98s : Process 5 is waiting
+98s : Process 6 is waiting
+98s : Process 1 is waiting
+98s : Process 4 is waiting
+98s : Monitor : 3 is working
+99s : Process 1 is waiting
+99s : Process 5 is waiting
+99s : Process 4 is waiting
+99s : Process 6 is waiting
+99s : Monitor : 3 is working
+100s : Process 5 is waiting
+100s : Process 4 is waiting
+100s : Process 1 is waiting
+100s : Process 6 is waiting
+100s : Monitor : 3 is working
+101s : Process 4 is waiting
+101s : Process 1 is waiting
+101s : Process 5 is waiting
+101s : Process 6 is waiting
+101s : Monitor : 3 is working
+102s : Process 6 is waiting
+102s : Process 1 is waiting
+102s : Process 4 is waiting
+102s : Process 5 is waiting
+102s : Monitor : 3 is working
+103s : Process 6 is waiting
+103s : Process 5 is waiting
+103s : Process 1 is waiting
+103s : Process 4 is waiting
+103s : Monitor : 3 is working
+104s : Process 4 is waiting
+104s : Process 6 is waiting
+104s : Process 1 is waiting
+104s : Process 5 is waiting
+104s : Monitor : 3 is working
+105s : Process 1 is waiting
+105s : Process 4 is waiting
+105s : Process 5 is waiting
+105s : Process 6 is waiting
+105s : Monitor : 3 is working
+106s : Process 6 is waiting
+106s : Process 5 is waiting
+106s : Process 4 is waiting
+106s : Process 1 is waiting
+106s : Monitor : 3 is working
+107s : Process 4 is waiting
+107s : Process 6 is waiting
+107s : Process 5 is waiting
+107s : Process 1 is waiting
+107s : Monitor : 3 is working
+108s : Process 4 is waiting
+108s : Process 1 is waiting
+108s : Process 5 is waiting
+108s : Process 6 is waiting
+108s : Monitor : 3 is working
+109s : Process 4 is waiting
+109s : Process 6 is waiting
+109s : Process 1 is waiting
+109s : Process 5 is waiting
+109s : Monitor : 3 is working
+110s : Process 4 is waiting
+110s : Process 5 is waiting
+110s : Process 6 is waiting
+110s : Process 1 is waiting
+110s : Monitor : 3 is working
+111s : Process 6 is waiting
+111s : Process 5 is waiting
+111s : Process 1 is waiting
+111s : Process 4 is waiting
+111s : Monitor : 3 is working
+112s : Process 5 is waiting
+112s : Process 1 is waiting
+112s : Process 4 is waiting
+112s : Process 6 is waiting
+112s : Monitor : 3 is working
+113s : Process 6 is waiting
+113s : Process 5 is waiting
+113s : Process 4 is waiting
+113s : Process 1 is waiting
+113s : Monitor : 3 is working
+114s : Process 6 is waiting
+114s : Process 1 is waiting
+114s : Process 5 is waiting
+114s : Process 4 is waiting
+114s : Monitor : 3 is working
+115s : Process 5 is waiting
+115s : Process 1 is waiting
+115s : Process 4 is waiting
+115s : Process 6 is waiting
+115s : Monitor : 3 is working
+116s : Process 4 is waiting
+116s : Process 1 is waiting
+116s : Process 5 is waiting
+116s : Process 6 is waiting
+116s : Monitor : 3 is working
+117s : Process 1 is waiting
+117s : Process 5 is waiting
+117s : Process 6 is waiting
+117s : Process 4 is waiting
+117s : Monitor : 3 is working
+118s : Process 5 is waiting
+118s : Process 1 is waiting
+118s : Process 4 is waiting
+118s : Process 6 is waiting
+118s : Monitor : 3 is working
+119s : Process 6 is waiting
+119s : Process 1 is waiting
+119s : Process 4 is waiting
+119s : Process 5 is waiting
+119s : Monitor : 3 is working
+120s : Process 4 is waiting
+120s : Process 5 is waiting
+120s : Process 1 is waiting
+120s : Process 6 is waiting
+120s : Monitor : 3 finished
+exit process
+Process_ 3 Terminated
+Process_ 3 Waiting Time ; 60
+Process_ 3 Turnaround Time : 120
+Process_ 3 Response Time : 60
+120s : Monitor : ready queue list : 1, 4, 5, 6, 
+120s : Monitor : 1 loaded on cpu
+120s : Process 1 is running
+120s : Monitor : 1 is working
+121s : Process 6 is waiting
+121s : Process 5 is waiting
+121s : Process 4 is waiting
+121s : Monitor : 1 is working
+122s : Process 4 is waiting
+122s : Process 6 is waiting
+122s : Process 5 is waiting
+122s : Monitor : 1 is working
+123s : Process 5 is waiting
+123s : Process 6 is waiting
+123s : Process 4 is waiting
+123s : Monitor : 1 is working
+124s : Process 6 is waiting
+124s : Process 4 is waiting
+124s : Process 5 is waiting
+124s : Monitor : 1 is working
+125s : Process 4 is waiting
+125s : Process 6 is waiting
+125s : Process 5 is waiting
+125s : Monitor : 1 is working
+126s : Process 6 is waiting
+126s : Process 5 is waiting
+126s : Process 4 is waiting
+126s : Monitor : 1 is working
+127s : Process 6 is waiting
+127s : Process 5 is waiting
+127s : Process 4 is waiting
+127s : Monitor : 1 is working
+128s : Process 6 is waiting
+128s : Process 5 is waiting
+128s : Process 4 is waiting
+128s : Monitor : 1 is working
+129s : Process 5 is waiting
+129s : Process 6 is waiting
+129s : Process 4 is waiting
+129s : Monitor : 1 is working
+130s : Process 6 is waiting
+130s : Process 5 is waiting
+130s : Process 4 is waiting
+130s : Monitor : 1 is working
+131s : Process 5 is waiting
+131s : Process 6 is waiting
+131s : Process 4 is waiting
+131s : Monitor : 1 is working
+132s : Process 6 is waiting
+132s : Process 4 is waiting
+132s : Process 5 is waiting
+132s : Monitor : 1 is working
+133s : Process 5 is waiting
+133s : Process 4 is waiting
+133s : Process 6 is waiting
+133s : Monitor : 1 is working
+134s : Process 5 is waiting
+134s : Process 6 is waiting
+134s : Process 4 is waiting
+134s : Monitor : 1 is working
+135s : Process 6 is waiting
+135s : Process 4 is waiting
+135s : Process 5 is waiting
+135s : Monitor : 1 is working
+136s : Process 4 is waiting
+136s : Process 6 is waiting
+136s : Process 5 is waiting
+136s : Monitor : 1 is working
+137s : Process 6 is waiting
+137s : Process 5 is waiting
+137s : Process 4 is waiting
+137s : Monitor : 1 is working
+138s : Process 6 is waiting
+138s : Process 5 is waiting
+138s : Process 4 is waiting
+138s : Monitor : 1 is working
+139s : Process 6 is waiting
+139s : Process 4 is waiting
+139s : Process 5 is waiting
+139s : Monitor : 1 is working
+140s : Process 4 is waiting
+140s : Process 6 is waiting
+140s : Process 5 is waiting
+140s : Monitor : 1 is working
+141s : Process 6 is waiting
+141s : Process 4 is waiting
+141s : Process 5 is waiting
+141s : Monitor : 1 is working
+142s : Process 4 is waiting
+142s : Process 6 is waiting
+142s : Process 5 is waiting
+142s : Monitor : 1 is working
+143s : Process 6 is waiting
+143s : Process 4 is waiting
+143s : Process 5 is waiting
+143s : Monitor : 1 is working
+144s : Process 5 is waiting
+144s : Process 4 is waiting
+144s : Process 6 is waiting
+144s : Monitor : 1 is working
+145s : Process 6 is waiting
+145s : Process 4 is waiting
+145s : Process 5 is waiting
+145s : Monitor : 1 is working
+146s : Process 4 is waiting
+146s : Process 5 is waiting
+146s : Process 6 is waiting
+146s : Monitor : 1 is working
+147s : Process 6 is waiting
+147s : Process 5 is waiting
+147s : Process 4 is waiting
+147s : Monitor : 1 is working
+148s : Process 6 is waiting
+148s : Process 5 is waiting
+148s : Process 4 is waiting
+148s : Monitor : 1 is working
+149s : Process 4 is waiting
+149s : Process 5 is waiting
+149s : Process 6 is waiting
+149s : Monitor : 1 is working
+150s : Process 6 is waiting
+150s : Process 5 is waiting
+150s : Process 4 is waiting
+150s : Monitor : 1 is working
+151s : Process 4 is waiting
+151s : Process 5 is waiting
+151s : Process 6 is waiting
+151s : Monitor : 1 is working
+152s : Process 6 is waiting
+152s : Process 5 is waiting
+152s : Process 4 is waiting
+152s : Monitor : 1 is working
+153s : Process 4 is waiting
+153s : Process 5 is waiting
+153s : Process 6 is waiting
+153s : Monitor : 1 is working
+154s : Process 6 is waiting
+154s : Process 5 is waiting
+154s : Process 4 is waiting
+154s : Monitor : 1 is working
+155s : Process 4 is waiting
+155s : Process 6 is waiting
+155s : Process 5 is waiting
+155s : Monitor : 1 is working
+156s : Process 4 is waiting
+156s : Process 6 is waiting
+156s : Process 5 is waiting
+156s : Monitor : 1 is working
+157s : Process 4 is waiting
+157s : Process 6 is waiting
+157s : Process 5 is waiting
+157s : Monitor : 1 is working
+158s : Process 4 is waiting
+158s : Process 5 is waiting
+158s : Process 6 is waiting
+158s : Monitor : 1 is working
+159s : Process 6 is waiting
+159s : Process 4 is waiting
+159s : Process 5 is waiting
+159s : Monitor : 1 is working
+160s : Process 4 is waiting
+160s : Process 6 is waiting
+160s : Process 5 is waiting
+160s : Monitor : 1 is working
+161s : Process 4 is waiting
+161s : Process 6 is waiting
+161s : Process 5 is waiting
+161s : Monitor : 1 is working
+162s : Process 6 is waiting
+162s : Process 5 is waiting
+162s : Process 4 is waiting
+162s : Monitor : 1 is working
+163s : Process 6 is waiting
+163s : Process 5 is waiting
+163s : Process 4 is waiting
+163s : Monitor : 1 is working
+164s : Process 4 is waiting
+164s : Process 6 is waiting
+164s : Process 5 is waiting
+164s : Monitor : 1 is working
+165s : Process 6 is waiting
+165s : Process 4 is waiting
+165s : Process 5 is waiting
+165s : Monitor : 1 is working
+166s : Process 4 is waiting
+166s : Process 6 is waiting
+166s : Process 5 is waiting
+166s : Monitor : 1 is working
+167s : Process 6 is waiting
+167s : Process 4 is waiting
+167s : Process 5 is waiting
+167s : Monitor : 1 is working
+168s : Process 6 is waiting
+168s : Process 5 is waiting
+168s : Process 4 is waiting
+168s : Monitor : 1 is working
+169s : Process 5 is waiting
+169s : Process 4 is waiting
+169s : Process 6 is waiting
+169s : Monitor : 1 is working
+170s : Process 4 is waiting
+170s : Process 6 is waiting
+170s : Process 5 is waiting
+170s : Monitor : 1 is working
+171s : Process 6 is waiting
+171s : Process 4 is waiting
+171s : Process 5 is waiting
+171s : Monitor : 1 is working
+172s : Process 6 is waiting
+172s : Process 4 is waiting
+172s : Process 5 is waiting
+172s : Monitor : 1 is working
+173s : Process 4 is waiting
+173s : Process 6 is waiting
+173s : Process 5 is waiting
+173s : Monitor : 1 is working
+174s : Process 5 is waiting
+174s : Process 6 is waiting
+174s : Process 4 is waiting
+174s : Monitor : 1 is working
+175s : Process 4 is waiting
+175s : Process 6 is waiting
+175s : Process 5 is waiting
+175s : Monitor : 1 is working
+176s : Process 6 is waiting
+176s : Process 4 is waiting
+176s : Process 5 is waiting
+176s : Monitor : 1 is working
+177s : Process 6 is waiting
+177s : Process 4 is waiting
+177s : Process 5 is waiting
+177s : Monitor : 1 is working
+178s : Process 6 is waiting
+178s : Process 4 is waiting
+178s : Process 5 is waiting
+178s : Monitor : 1 is working
+179s : Process 5 is waiting
+179s : Process 6 is waiting
+179s : Process 4 is waiting
+179s : Monitor : 1 is working
+180s : Process 6 is waiting
+180s : Process 4 is waiting
+180s : Process 5 is waiting
+180s : Monitor : 1 is working
+181s : Process 5 is waiting
+181s : Process 6 is waiting
+181s : Process 4 is waiting
+181s : Monitor : 1 is working
+182s : Process 5 is waiting
+182s : Process 6 is waiting
+182s : Process 4 is waiting
+182s : Monitor : 1 is working
+183s : Process 4 is waiting
+183s : Process 6 is waiting
+183s : Process 5 is waiting
+183s : Monitor : 1 is working
+184s : Process 4 is waiting
+184s : Process 5 is waiting
+184s : Process 6 is waiting
+184s : Monitor : 1 is working
+185s : Process 4 is waiting
+185s : Process 5 is waiting
+185s : Process 6 is waiting
+185s : Monitor : 1 is working
+186s : Process 6 is waiting
+186s : Process 5 is waiting
+186s : Process 4 is waiting
+186s : Monitor : 1 is working
+187s : Process 5 is waiting
+187s : Process 6 is waiting
+187s : Process 4 is waiting
+187s : Monitor : 1 is working
+188s : Process 5 is waiting
+188s : Process 4 is waiting
+188s : Process 6 is waiting
+188s : Monitor : 1 is working
+189s : Process 5 is waiting
+189s : Process 4 is waiting
+189s : Process 6 is waiting
+189s : Monitor : 1 is working
+190s : Process 6 is waiting
+190s : Process 5 is waiting
+190s : Process 4 is waiting
+190s : Monitor : 1 is working
+191s : Process 4 is waiting
+191s : Process 6 is waiting
+191s : Process 5 is waiting
+191s : Monitor : 1 is working
+192s : Process 6 is waiting
+192s : Process 4 is waiting
+192s : Process 5 is waiting
+192s : Monitor : 1 is working
+193s : Process 6 is waiting
+193s : Process 4 is waiting
+193s : Process 5 is waiting
+193s : Monitor : 1 is working
+194s : Process 5 is waiting
+194s : Process 6 is waiting
+194s : Process 4 is waiting
+194s : Monitor : 1 is working
+195s : Process 5 is waiting
+195s : Process 6 is waiting
+195s : Process 4 is waiting
+195s : Monitor : 1 is working
+196s : Process 5 is waiting
+196s : Process 6 is waiting
+196s : Process 4 is waiting
+196s : Monitor : 1 is working
+197s : Process 4 is waiting
+197s : Process 6 is waiting
+197s : Process 5 is waiting
+197s : Monitor : 1 is working
+198s : Process 6 is waiting
+198s : Process 5 is waiting
+198s : Process 4 is waiting
+198s : Monitor : 1 is working
+199s : Process 6 is waiting
+199s : Process 4 is waiting
+199s : Process 5 is waiting
+199s : Monitor : 1 is working
+200s : Process 6 is waiting
+200s : Process 5 is waiting
+200s : Process 4 is waiting
+200s : Monitor : 1 is working
+201s : Process 4 is waiting
+201s : Process 5 is waiting
+201s : Process 6 is waiting
+201s : Monitor : 1 is working
+202s : Process 6 is waiting
+202s : Process 4 is waiting
+202s : Process 5 is waiting
+202s : Monitor : 1 is working
+203s : Process 4 is waiting
+203s : Process 5 is waiting
+203s : Process 6 is waiting
+203s : Monitor : 1 is working
+204s : Process 4 is waiting
+204s : Process 6 is waiting
+204s : Process 5 is waiting
+204s : Monitor : 1 is working
+205s : Process 4 is waiting
+205s : Process 5 is waiting
+205s : Process 6 is waiting
+205s : Monitor : 1 is working
+206s : Process 4 is waiting
+206s : Process 5 is waiting
+206s : Process 6 is waiting
+206s : Monitor : 1 is working
+207s : Process 5 is waiting
+207s : Process 4 is waiting
+207s : Process 6 is waiting
+207s : Monitor : 1 is working
+208s : Process 6 is waiting
+208s : Process 4 is waiting
+208s : Process 5 is waiting
+208s : Monitor : 1 is working
+209s : Process 6 is waiting
+209s : Process 4 is waiting
+209s : Process 5 is waiting
+209s : Monitor : 1 is working
+210s : Process 6 is waiting
+210s : Process 5 is waiting
+210s : Process 4 is waiting
+210s : Monitor : 1 is working
+211s : Process 5 is waiting
+211s : Process 4 is waiting
+211s : Process 6 is waiting
+211s : Monitor : 1 is working
+212s : Process 5 is waiting
+212s : Process 6 is waiting
+212s : Process 4 is waiting
+212s : Monitor : 1 is working
+213s : Process 5 is waiting
+213s : Process 4 is waiting
+213s : Process 6 is waiting
+213s : Monitor : 1 is working
+214s : Process 5 is waiting
+214s : Process 6 is waiting
+214s : Process 4 is waiting
+214s : Monitor : 1 is working
+215s : Process 4 is waiting
+215s : Process 5 is waiting
+215s : Process 6 is waiting
+215s : Monitor : 1 is working
+216s : Process 4 is waiting
+216s : Process 6 is waiting
+216s : Process 5 is waiting
+216s : Monitor : 1 is working
+217s : Process 4 is waiting
+217s : Process 5 is waiting
+217s : Process 6 is waiting
+217s : Monitor : 1 is working
+218s : Process 6 is waiting
+218s : Process 4 is waiting
+218s : Process 5 is waiting
+218s : Monitor : 1 is working
+219s : Process 6 is waiting
+219s : Process 5 is waiting
+219s : Process 4 is waiting
+219s : Monitor : 1 is working
+220s : Process 5 is waiting
+220s : Process 6 is waiting
+220s : Process 4 is waiting
+220s : Monitor : 1 finished
+exit process
+Process_ 1 Terminated
+Process_ 1 Waiting Time ; 120
+Process_ 1 Turnaround Time : 220
+Process_ 1 Response Time : 120
+220s : Monitor : ready queue list : 4, 5, 6, 
+220s : Monitor : 4 loaded on cpu
+220s : Process 4 is running
+220s : Monitor : 4 is working
+221s : Process 6 is waiting
+221s : Process 5 is waiting
+221s : Monitor : 4 is working
+222s : Process 5 is waiting
+222s : Process 6 is waiting
+222s : Monitor : 4 is working
+223s : Process 5 is waiting
+223s : Process 6 is waiting
+223s : Monitor : 4 is working
+224s : Process 5 is waiting
+224s : Process 6 is waiting
+224s : Monitor : 4 is working
+225s : Process 6 is waiting
+225s : Process 5 is waiting
+225s : Monitor : 4 is working
+226s : Process 6 is waiting
+226s : Process 5 is waiting
+226s : Monitor : 4 is working
+227s : Process 5 is waiting
+227s : Process 6 is waiting
+227s : Monitor : 4 is working
+228s : Process 6 is waiting
+228s : Process 5 is waiting
+228s : Monitor : 4 is working
+229s : Process 6 is waiting
+229s : Process 5 is waiting
+229s : Monitor : 4 is working
+230s : Process 6 is waiting
+230s : Process 5 is waiting
+230s : Monitor : 4 finished
+exit process
+Process_ 4 Terminated
+Process_ 4 Waiting Time ; 215
+Process_ 4 Turnaround Time : 225
+Process_ 4 Response Time : 215
+230s : Monitor : ready queue list : 5, 6, 
+230s : Monitor : 5 loaded on cpu
+230s : Process 5 is running
+230s : Monitor : 5 is working
+231s : Process 6 is waiting
+231s : Monitor : 5 is working
+232s : Process 6 is waiting
+232s : Monitor : 5 is working
+233s : Process 6 is waiting
+233s : Monitor : 5 is working
+234s : Process 6 is waiting
+234s : Monitor : 5 is working
+235s : Process 6 is waiting
+235s : Monitor : 5 is working
+236s : Process 6 is waiting
+236s : Monitor : 5 is working
+237s : Process 6 is waiting
+237s : Monitor : 5 is working
+238s : Process 6 is waiting
+238s : Monitor : 5 is working
+239s : Process 6 is waiting
+239s : Monitor : 5 is working
+240s : Process 6 is waiting
+240s : Monitor : 5 is working
+241s : Process 6 is waiting
+241s : Monitor : 5 is working
+242s : Process 6 is waiting
+242s : Monitor : 5 is working
+243s : Process 6 is waiting
+243s : Monitor : 5 is working
+244s : Process 6 is waiting
+244s : Monitor : 5 is working
+245s : Process 6 is waiting
+245s : Monitor : 5 is working
+246s : Process 6 is waiting
+246s : Monitor : 5 is working
+247s : Process 6 is waiting
+247s : Monitor : 5 is working
+248s : Process 6 is waiting
+248s : Monitor : 5 is working
+249s : Process 6 is waiting
+249s : Monitor : 5 is working
+250s : Process 6 is waiting
+250s : Monitor : 5 is working
+251s : Process 6 is waiting
+251s : Monitor : 5 is working
+252s : Process 6 is waiting
+252s : Monitor : 5 is working
+253s : Process 6 is waiting
+253s : Monitor : 5 is working
+254s : Process 6 is waiting
+254s : Monitor : 5 is wo

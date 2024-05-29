@@ -42,7 +42,6 @@ void scheduler(t_setting *setting, t_process *processes, int mode) {
 void join_threads(t_setting *setting, t_process *processes) {
 	t_process *process;
 	process = processes->next;
-
 	for (int i = 0; i < setting->total_process_count; i++) {
 		pthread_join(process->thread_id, NULL);
 		process = process->next;

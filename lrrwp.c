@@ -4,7 +4,6 @@
 #include "init.h"
 #include <pthread.h>
 #include <stdio.h>
-#include <sys/_types/_ucontext.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <limits.h>
@@ -48,101 +47,12 @@ static void update_priority(t_setting *set, t_ready_queue *ready_queue) {
 		temp = temp->next;
 	}
 }
-/*
-static void job_one(t_setting *set, t_ready_queue **ready_queue, t_ready_queue **job, t_ready_queue *running_queue, int time) {
-	t_ready_queue *temp;
-	t_ready_queue *last;
-	t_ready_queue *c_job;
-	int id;
-	int count = 0;
-	int priority = INT_MIN;
-
-	pthread_mutex_lock(set->mutex_list->ready_queue);
-	*ready_queue = set->values->ready_queue;
-	c_job = *job;
-
-	last = running_queue;
-	while (last->next != NULL) {
-		last = last->next;
-		count++;
-	}
-	last->next = c_job;
-	if (c_job != NULL)
-		count++;
-
-	if ((*ready_queue)->next != NULL) {
-		pthread_mutex_lock(set->mutex_list->p);
-		printf("%ds : ready_queue list : ", time);
-		for (t_ready_queue *temp = (*ready_queue)->next; temp != NULL; temp = temp->next) {
-			printf("%d, ", temp->id);
-		}
-		printf("\n");
-		printf("%ds : running_queue list : ", time);
-		for (t_ready_queue *temp = running_queue->next; temp != NULL; temp = temp->next) {
-			printf("%d, ", temp->id);
-		}
-		printf("\n");
-		pthread_mutex_unlock(set->mutex_list->p);
-		//running_queue에 작업 추가 수정 필요
-		if (count < RQ_SIZE) {
-			update_priority(set, *ready_queue);
-			temp = (*ready_queue)->next;
-			while (temp != NULL) {
-				if (temp->priority > priority) {
-					priority = temp->priority;
-					id = temp->id;
-				}
-				temp = temp->next;
-			}
-			temp = (*ready_queue);
-			while (temp->next->id != id) {
-				temp = temp->next;
-			}
-			last = running_queue;
-			while (last != NULL) {
-				last = last->next;
-			}
-			last->next = temp->next;
-			temp->next = temp->next->next;
-			last->next->next = NULL;
-		}
-	}
-	printf("successfully end find job %d\n", id);
-	if (running_queue->next != NULL) {
-		*job = running_queue->next;
-		temp = *job;
-
-		running_queue->next = temp->next;
-		temp->next = NULL;
-
-		id = temp->id;
-
-		pthread_mutex_unlock(set->mutex_list->ready_queue);
-		pthread_mutex_lock(set->mutex_list->cpu);
-		set->values->process_on_cpu = id;
-		pthread_mutex_unlock(set->mutex_list->cpu);
-		pthread_mutex_lock(set->mutex_list->p);
-		printf("%ds : Monitor : %d loaded on cpu\n", time, id);
-		pthread_mutex_unlock(set->mutex_list->p);
-	} else {
-		pthread_mutex_unlock(set->mutex_list->ready_queue);
-		if (set->counter == set->total_process_count || set->values->remain_thread_count == 0) {
-			return ;
-		}
-		printf("%ds : Monitor : no process\n", time);
-		pthread_mutex_lock(set->mutex_list->t);
-		set->values->time++;
-		pthread_mutex_unlock(set->mutex_list->t);
-	}
-	printf("end\n");
-}
-*/
 
 static void job_one(t_setting *set, t_ready_queue **ready_queue, t_ready_queue **job, t_ready_queue *running_queue, int time) {
     t_ready_queue *temp;
     t_ready_queue *last;
     t_ready_queue *c_job;
-    int id = -1;  // 초기값을 설정하지 않으면 찾지 못한 경우 쓰레기 값이 들어갈 수 있음.
+    int id = -1;
     int count = 0;
     int priority = INT_MIN;
 
@@ -150,19 +60,16 @@ static void job_one(t_setting *set, t_ready_queue **ready_queue, t_ready_queue *
     *ready_queue = set->values->ready_queue;
     c_job = *job;
 
-    // 러닝 큐의 마지막을 찾기 위한 루프
     last = running_queue;
     while (last->next != NULL) {
         last = last->next;
         count++;
     }
 
-    // 현재 작업을 러닝 큐에 추가
     last->next = c_job;
     if (c_job != NULL)
         count++;
 
-    // 레디 큐가 비어있지 않으면
     if ((*ready_queue)->next != NULL) {
         pthread_mutex_lock(set->mutex_list->p);
         printf("%ds : ready_queue list : ", time);
@@ -178,10 +85,8 @@ static void job_one(t_setting *set, t_ready_queue **ready_queue, t_ready_queue *
         pthread_mutex_unlock(set->mutex_list->p);
 
         if (count < RQ_SIZE) {
-            // 우선순위 갱신
             update_priority(set, *ready_queue);
 
-            // 가장 높은 우선순위 작업 선택
             temp = (*ready_queue)->next;
             while (temp != NULL) {
                 if (temp->priority > priority) {
@@ -191,7 +96,6 @@ static void job_one(t_setting *set, t_ready_queue **ready_queue, t_ready_queue *
                 temp = temp->next;
             }
 
-            // 선택된 작업을 러닝 큐에 추가하고, 레디 큐에서 제거
             temp = *ready_queue;
             while (temp->next != NULL && temp->next->id != id) {
                 temp = temp->next;
@@ -199,21 +103,18 @@ static void job_one(t_setting *set, t_ready_queue **ready_queue, t_ready_queue *
 
             if (temp->next != NULL) {
                 t_ready_queue *selected_job = temp->next;
-                temp->next = temp->next->next;  // 레디 큐에서 제거
+                temp->next = temp->next->next;
 
-                // 러닝 큐의 마지막을 찾기 위한 루프
                 last = running_queue;
                 while (last->next != NULL) {
                     last = last->next;
                 }
 
-                // 러닝 큐에 추가
                 last->next = selected_job;
                 selected_job->next = NULL;
             }
         }
     }
-    printf("successfully end find job %d\n", id);
     if (running_queue->next != NULL) {
         *job = running_queue->next;
         temp = *job;
@@ -240,7 +141,6 @@ static void job_one(t_setting *set, t_ready_queue **ready_queue, t_ready_queue *
         set->values->time++;
         pthread_mutex_unlock(set->mutex_list->t);
     }
-    printf("end\n");
 }
 
 static void job_two_c(t_setting *set, int running_id, t_ready_queue **job, int time) {

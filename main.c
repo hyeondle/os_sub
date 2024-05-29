@@ -49,7 +49,5 @@ int main(int argc, char **argv) {
 	print_status(setting, processes);
 	memory_free(setting, processes);
 
-	// system("leaks a.out");
-
 	return 0;
 }
