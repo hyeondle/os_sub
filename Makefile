@@ -1,44 +1,31 @@
-NAME	=	scheduler
+JAVA	=	java
+JAVAC	=	javac
 
-SOURCES	=	main.c\
-			init.c\
-			scheduling.c\
-			utils.c\
-			free.c\
-			cycle.c\
-			fcfs.c\
-			sjf.c\
-			srtf.c\
-			rr.c\
-			lrrwp.c\
+SOURCE	=	ProcessSchedulerGUI.java\
+			ProcessInfo.java\
+			GanttChart.java\
 
-OBJECTS	=	$(SOURCES:.c=.o)
+CLASSES	=	$(SOURCE:.java=.class)
 
-CC		=	gcc
-CFLAGS	=	-Wall -Wextra -Werror
+MAIN	=	ProcessSchedulerGUI
 
 CONTEXT_SWITCH ?= 0
 QUANTUM ?= 20
 RQ_SIZE ?= 3
 
-.c.o	:
-			$(CC) $(CFLAGS) -DCONTEXT_SWITCH=$(CONTEXT_SWITCH) -DQUANTUM=$(QUANTUM) -DRQ_SIZE=$(RQ_SIZE) -c $< -o $(<:.c=.o) -I ./
+all: $(CLASSES)
 
-all		:	$(NAME)
+%.class	:	%.java
+			$(JAVAC) $<
 
-$(NAME)	:	$(OBJECTS)
-			$(CC) $(CFLAGS) $(OBJECTS) -o $(NAME)
+run	:	all
+		$(JAVA) $(MAIN)
+
+scheduler :
+		$(MAKE) -C bins CONTEXT_SWITCH=$(CONTEXT_SWITCH) QUANTUM=$(QUANTUM) RQ_SIZE=$(RQ_SIZE)
 
 clean	:
-			rm -f $(OBJECTS)
+		rm -f *.class
+		$(MAKE) -C bins fclean
 
-fclean	:	clean
-			rm -f $(NAME)
-
-re		:
-			fclean
-			all
-
-.PHONY	:	all clean fclean re
-
-
+.PHONY	: all run clean
