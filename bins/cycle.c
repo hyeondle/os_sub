@@ -164,7 +164,7 @@ void	*cycle(void *arg) {
 
 	pthread_mutex_lock(p->mutex_list->p);
 	printf("Process_ %d Terminated\n", p->id);
-	printf("Process_ %d Waiting Time ; %d\n", p->id, p->waiting_time);
+	printf("Process_ %d Waiting Time : %d\n", p->id, p->waiting_time);
 	printf("Process_ %d Turnaround Time : %d\n", p->id, p->turnaround_time);
 	printf("Process_ %d Response Time : %d\n", p->id, p->response_time);
 	pthread_mutex_unlock(p->mutex_list->p);
