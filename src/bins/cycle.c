@@ -123,7 +123,7 @@ void	*cycle(void *arg) {
 			// time = p->values->time;
 			// pthread_mutex_unlock(p->mutex_list->t);
 
-			if (time == p->arrival_time) {
+			if (time >= p->arrival_time) {
 				arrival(p, time);
 				prev_time = time;
 			}

@@ -1,0 +1,521 @@
+4 thread will be created
+process count: 4
+round_robin start
+0s : Process 1 is submitted
+0s : Monitor : ready queue list : 1, 
+3s : Monitor : 1 loaded on cpu
+3s : Process 1 is running
+3s : Process 2 is submitted
+3s : Process 4 is submitted
+3s : Process 3 is submitted
+3s : Monitor : 1 is working
+4s : Process 4 is waiting
+4s : Process 3 is waiting
+4s : Process 2 is waiting
+4s : Monitor : 1 is working
+5s : Process 4 is waiting
+5s : Process 2 is waiting
+5s : Process 3 is waiting
+5s : Monitor : 1 is working
+6s : Process 2 is waiting
+6s : Process 4 is waiting
+6s : Process 3 is waiting
+6s : Monitor : 1 is working
+7s : Process 4 is waiting
+7s : Process 2 is waiting
+7s : Process 3 is waiting
+7s : Monitor : 1 is working
+8s : Process 2 is waiting
+8s : Process 3 is waiting
+8s : Process 4 is waiting
+8s : Monitor : 1 is working
+9s : Process 4 is waiting
+9s : Process 2 is waiting
+9s : Process 3 is waiting
+9s : Monitor : 1 is working
+10s : Process 3 is waiting
+10s : Process 2 is waiting
+10s : Process 4 is waiting
+10s : Monitor : 1 is working
+11s : Process 3 is waiting
+11s : Process 4 is waiting
+11s : Process 2 is waiting
+11s : Monitor : 1 is working
+12s : Process 3 is waiting
+12s : Process 4 is waiting
+12s : Process 2 is waiting
+12s : Monitor : 1 is working
+13s : Process 3 is waiting
+13s : Process 2 is waiting
+13s : Process 4 is waiting
+13s : Monitor : 1 is working
+14s : Process 2 is waiting
+14s : Process 3 is waiting
+14s : Process 4 is waiting
+14s : Monitor : 1 is working
+15s : Process 4 is waiting
+15s : Process 2 is waiting
+15s : Process 3 is waiting
+15s : Monitor : 1 is working
+16s : Process 3 is waiting
+16s : Process 2 is waiting
+16s : Process 4 is waiting
+16s : Monitor : 1 is working
+17s : Process 3 is waiting
+17s : Process 4 is waiting
+17s : Process 2 is waiting
+17s : Monitor : 1 is working
+18s : Process 4 is waiting
+18s : Process 3 is waiting
+18s : Process 2 is waiting
+18s : Monitor : 1 is working
+19s : Process 2 is waiting
+19s : Process 4 is waiting
+19s : Process 3 is waiting
+19s : Monitor : 1 is working
+20s : Process 2 is waiting
+20s : Process 4 is waiting
+20s : Process 3 is waiting
+20s : Monitor : 1 is working
+21s : Process 4 is waiting
+21s : Process 2 is waiting
+21s : Process 3 is waiting
+21s : Monitor : 1 is working
+22s : Process 4 is waiting
+22s : Process 3 is waiting
+22s : Process 2 is waiting
+22s : Monitor : 1 is working
+23s : Process 3 is waiting
+23s : Process 2 is waiting
+23s : Process 4 is waiting
+23s : Monitor : 1 is working
+24s : Process 1 is waiting
+24s : Process 3 is waiting
+24s : Process 4 is waiting
+24s : Process 2 is waiting
+24s : Monitor : ready queue list : 2, 4, 3, 1, 
+27s : Monitor : 2 loaded on cpu
+27s : Process 3 is waiting
+27s : Process 1 is waiting
+27s : Process 2 is running
+27s : Process 4 is waiting
+27s : Monitor : 2 is working
+28s : Process 4 is waiting
+28s : Process 1 is waiting
+28s : Process 3 is waiting
+28s : Monitor : 2 is working
+29s : Process 4 is waiting
+29s : Process 3 is waiting
+29s : Process 1 is waiting
+29s : Monitor : 2 is working
+30s : Process 4 is waiting
+30s : Process 3 is waiting
+30s : Process 1 is waiting
+30s : Monitor : 2 is working
+31s : Process 1 is waiting
+31s : Process 4 is waiting
+31s : Process 3 is waiting
+31s : Monitor : 2 is working
+32s : Process 1 is waiting
+32s : Process 4 is waiting
+32s : Process 3 is waiting
+32s : Monitor : 2 is working
+33s : Process 4 is waiting
+33s : Process 3 is waiting
+33s : Process 1 is waiting
+33s : Monitor : 2 is working
+34s : Process 3 is waiting
+34s : Process 4 is waiting
+34s : Process 1 is waiting
+34s : Monitor : 2 is working
+35s : Process 3 is waiting
+35s : Process 1 is waiting
+35s : Process 4 is waiting
+35s : Monitor : 2 is working
+36s : Process 4 is waiting
+36s : Process 3 is waiting
+36s : Process 1 is waiting
+36s : Monitor : 2 is working
+37s : Process 1 is waiting
+37s : Process 4 is waiting
+37s : Process 3 is waiting
+37s : Monitor : 2 is working
+38s : Process 3 is waiting
+38s : Process 4 is waiting
+38s : Process 1 is waiting
+38s : Monitor : 2 is working
+39s : Process 3 is waiting
+39s : Process 4 is waiting
+39s : Process 1 is waiting
+39s : Monitor : 2 is working
+40s : Process 1 is waiting
+40s : Process 4 is waiting
+40s : Process 3 is waiting
+40s : Monitor : 2 is working
+41s : Process 3 is waiting
+41s : Process 4 is waiting
+41s : Process 1 is waiting
+41s : Monitor : 2 is working
+42s : Process 4 is waiting
+42s : Process 3 is waiting
+42s : Process 1 is waiting
+42s : Monitor : 2 is working
+43s : Process 4 is waiting
+43s : Process 3 is waiting
+43s : Process 1 is waiting
+43s : Monitor : 2 is working
+44s : Process 4 is waiting
+44s : Process 1 is waiting
+44s : Process 3 is waiting
+44s : Monitor : 2 finished
+exit process
+Process_ 2 Terminated
+Process_ 2 Waiting Time : 21
+Process_ 2 Turnaround Time : 43
+Process_ 2 Response Time : 26
+47s : Monitor : ready queue list : 4, 3, 1, 
+50s : Monitor : 4 loaded on cpu
+50s : Process 4 is running
+50s : Monitor : 4 is working
+51s : Process 1 is waiting
+51s : Process 3 is waiting
+51s : Monitor : 4 is working
+52s : Process 1 is waiting
+52s : Process 3 is waiting
+52s : Monitor : 4 is working
+53s : Process 3 is waiting
+53s : Process 1 is waiting
+53s : Monitor : 4 is working
+54s : Process 3 is waiting
+54s : Process 1 is waiting
+54s : Monitor : 4 is working
+55s : Process 3 is waiting
+55s : Process 1 is waiting
+55s : Monitor : 4 is working
+56s : Process 3 is waiting
+56s : Process 1 is waiting
+56s : Monitor : 4 is working
+57s : Process 1 is waiting
+57s : Process 3 is waiting
+57s : Monitor : 4 is working
+58s : Process 3 is waiting
+58s : Process 1 is waiting
+58s : Monitor : 4 is working
+59s : Process 1 is waiting
+59s : Process 3 is waiting
+59s : Monitor : 4 is working
+60s : Process 3 is waiting
+60s : Process 1 is waiting
+60s : Monitor : 4 is working
+61s : Process 1 is waiting
+61s : Process 3 is waiting
+61s : Monitor : 4 is working
+62s : Process 1 is waiting
+62s : Process 3 is waiting
+62s : Monitor : 4 is working
+63s : Process 3 is waiting
+63s : Process 1 is waiting
+63s : Monitor : 4 is working
+64s : Process 3 is waiting
+64s : Process 1 is waiting
+64s : Monitor : 4 is working
+65s : Process 3 is waiting
+65s : Process 1 is waiting
+65s : Monitor : 4 is working
+66s : Process 3 is waiting
+66s : Process 1 is waiting
+66s : Monitor : 4 is working
+67s : Process 3 is waiting
+67s : Process 1 is waiting
+67s : Monitor : 4 is working
+68s : Process 3 is waiting
+68s : Process 1 is waiting
+68s : Monitor : 4 is working
+69s : Process 3 is waiting
+69s : Process 1 is waiting
+69s : Monitor : 4 is working
+70s : Process 3 is waiting
+70s : Process 1 is waiting
+70s : Monitor : 4 is working
+71s : Process 4 is waiting
+71s : Process 1 is waiting
+71s : Process 3 is waiting
+71s : Monitor : ready queue list : 3, 1, 4, 
+74s : Monitor : 3 loaded on cpu
+74s : Process 4 is waiting
+74s : Process 1 is waiting
+74s : Process 3 is running
+74s : Monitor : 3 is working
+75s : Process 1 is waiting
+75s : Process 4 is waiting
+75s : Monitor : 3 is working
+76s : Process 4 is waiting
+76s : Process 1 is waiting
+76s : Monitor : 3 is working
+77s : Process 4 is waiting
+77s : Process 1 is waiting
+77s : Monitor : 3 is working
+78s : Process 1 is waiting
+78s : Process 4 is waiting
+78s : Monitor : 3 is working
+79s : Process 1 is waiting
+79s : Process 4 is waiting
+79s : Monitor : 3 is working
+80s : Process 4 is waiting
+80s : Process 1 is waiting
+80s : Monitor : 3 is working
+81s : Process 4 is waiting
+81s : Process 1 is waiting
+81s : Monitor : 3 is working
+82s : Process 1 is waiting
+82s : Process 4 is waiting
+82s : Monitor : 3 is working
+83s : Process 1 is waiting
+83s : Process 4 is waiting
+83s : Monitor : 3 is working
+84s : Process 1 is waiting
+84s : Process 4 is waiting
+84s : Monitor : 3 is working
+85s : Process 1 is waiting
+85s : Process 4 is waiting
+85s : Monitor : 3 is working
+86s : Process 1 is waiting
+86s : Process 4 is waiting
+86s : Monitor : 3 is working
+87s : Process 4 is waiting
+87s : Process 1 is waiting
+87s : Monitor : 3 is working
+88s : Process 4 is waiting
+88s : Process 1 is waiting
+88s : Monitor : 3 is working
+89s : Process 4 is waiting
+89s : Process 1 is waiting
+89s : Monitor : 3 is working
+90s : Process 1 is waiting
+90s : Process 4 is waiting
+90s : Monitor : 3 is working
+91s : Process 4 is waiting
+91s : Process 1 is waiting
+91s : Monitor : 3 is working
+92s : Process 1 is waiting
+92s : Process 4 is waiting
+92s : Monitor : 3 is working
+93s : Process 1 is waiting
+93s : Process 4 is waiting
+93s : Monitor : 3 is working
+94s : Process 4 is waiting
+94s : Process 1 is waiting
+94s : Monitor : 3 is working
+95s : Process 1 is waiting
+95s : Process 4 is waiting
+95s : Process 3 is waiting
+95s : Monitor : ready queue list : 1, 4, 3, 
+98s : Monitor : 1 loaded on cpu
+98s : Process 4 is waiting
+98s : Process 3 is waiting
+98s : Monitor : 1 is working
+99s : Process 3 is waiting
+99s : Process 4 is waiting
+99s : Monitor : 1 is working
+100s : Process 3 is waiting
+100s : Process 4 is waiting
+100s : Monitor : 1 is working
+101s : Process 3 is waiting
+101s : Process 4 is waiting
+101s : Monitor : 1 is working
+102s : Process 3 is waiting
+102s : Process 4 is waiting
+102s : Monitor : 1 is working
+103s : Process 3 is waiting
+103s : Process 4 is waiting
+103s : Monitor : 1 is working
+104s : Process 4 is waiting
+104s : Process 3 is waiting
+104s : Monitor : 1 is working
+105s : Process 3 is waiting
+105s : Process 4 is waiting
+105s : Monitor : 1 is working
+106s : Process 3 is waiting
+106s : Process 4 is waiting
+106s : Monitor : 1 is working
+107s : Process 3 is waiting
+107s : Process 4 is waiting
+107s : Monitor : 1 is working
+108s : Process 4 is waiting
+108s : Process 3 is waiting
+108s : Monitor : 1 is working
+109s : Process 3 is waiting
+109s : Process 4 is waiting
+109s : Monitor : 1 is working
+110s : Process 4 is waiting
+110s : Process 3 is waiting
+110s : Monitor : 1 is working
+111s : Process 3 is waiting
+111s : Process 4 is waiting
+111s : Monitor : 1 is working
+112s : Process 3 is waiting
+112s : Process 4 is waiting
+112s : Monitor : 1 is working
+113s : Process 3 is waiting
+113s : Process 4 is waiting
+113s : Monitor : 1 is working
+114s : Process 3 is waiting
+114s : Process 4 is waiting
+114s : Monitor : 1 is working
+115s : Process 3 is waiting
+115s : Process 4 is waiting
+115s : Monitor : 1 is working
+116s : Process 3 is waiting
+116s : Process 4 is waiting
+116s : Monitor : 1 is working
+117s : Process 3 is waiting
+117s : Process 4 is waiting
+117s : Monitor : 1 is working
+118s : Process 4 is waiting
+118s : Process 3 is waiting
+118s : Monitor : 1 is working
+119s : Process 4 is waiting
+119s : Process 1 is waiting
+119s : Process 3 is waiting
+119s : Monitor : ready queue list : 4, 3, 1, 
+122s : Monitor : 4 loaded on cpu
+122s : Process 3 is waiting
+122s : Process 1 is waiting
+122s : Monitor : 4 is working
+123s : Process 3 is waiting
+123s : Process 1 is waiting
+123s : Monitor : 4 is working
+124s : Process 3 is waiting
+124s : Process 1 is waiting
+124s : Monitor : 4 is working
+125s : Process 3 is waiting
+125s : Process 1 is waiting
+125s : Monitor : 4 finished
+exit process
+Process_ 4 Terminated
+Process_ 4 Waiting Time : 90
+Process_ 4 Turnaround Time : 122
+Process_ 4 Response Time : 47
+128s : Monitor : ready queue list : 3, 1, 
+131s : Monitor : 3 loaded on cpu
+131s : Monitor : 3 is working
+132s : Process 1 is waiting
+132s : Monitor : 3 is working
+133s : Process 1 is waiting
+133s : Monitor : 3 is working
+134s : Process 1 is waiting
+134s : Monitor : 3 is working
+135s : Process 1 is waiting
+135s : Monitor : 3 is working
+136s : Process 1 is waiting
+136s : Monitor : 3 is working
+137s : Process 1 is waiting
+137s : Monitor : 3 is working
+138s : Process 1 is waiting
+138s : Monitor : 3 is working
+139s : Process 1 is waiting
+139s : Monitor : 3 is working
+140s : Process 1 is waiting
+140s : Monitor : 3 is working
+141s : Process 1 is waiting
+141s : Monitor : 3 is working
+142s : Process 1 is waiting
+142s : Monitor : 3 is working
+143s : Process 1 is waiting
+143s : Monitor : 3 is working
+144s : Process 1 is waiting
+144s : Monitor : 3 is working
+145s : Process 1 is waiting
+145s : Monitor : 3 is working
+146s : Process 1 is waiting
+146s : Monitor : 3 is working
+147s : Process 1 is waiting
+147s : Monitor : 3 is working
+148s : Process 1 is waiting
+148s : Monitor : 3 is working
+149s : Process 1 is waiting
+149s : Monitor : 3 is working
+150s : Process 1 is waiting
+150s : Monitor : 3 is working
+151s : Process 1 is waiting
+151s : Monitor : 3 is working
+152s : Process 1 is waiting
+152s : Process 3 is waiting
+152s : Monitor : ready queue list : 1, 3, 
+155s : Monitor : 1 loaded on cpu
+155s : Process 3 is waiting
+155s : Monitor : 1 is working
+156s : Process 3 is waiting
+156s : Monitor : 1 is working
+157s : Process 3 is waiting
+157s : Monitor : 1 is working
+158s : Process 3 is waiting
+158s : Monitor : 1 is working
+159s : Process 3 is waiting
+159s : Monitor : 1 is working
+160s : Process 3 is waiting
+160s : Monitor : 1 is working
+161s : Process 3 is waiting
+161s : Monitor : 1 is working
+162s : Process 3 is waiting
+162s : Monitor : 1 is working
+163s : Process 3 is waiting
+163s : Monitor : 1 is working
+164s : Process 3 is waiting
+164s : Monitor : 1 is working
+165s : Process 3 is waiting
+165s : Monitor : 1 is working
+166s : Process 3 is waiting
+166s : Monitor : 1 finished
+exit process
+Process_ 1 Terminated
+Process_ 1 Waiting Time : 94
+Process_ 1 Turnaround Time : 166
+Process_ 1 Response Time : 3
+169s : Monitor : ready queue list : 3, 
+172s : Monitor : 3 loaded on cpu
+172s : Monitor : 3 is working
+173s : Monitor : 3 is working
+174s : Monitor : 3 is working
+175s : Monitor : 3 is working
+176s : Monitor : 3 is working
+177s : Monitor : 3 is working
+178s : Monitor : 3 is working
+179s : Monitor : 3 is working
+180s : Monitor : 3 is working
+181s : Monitor : 3 is working
+182s : Monitor : 3 is working
+183s : Monitor : 3 is working
+184s : Monitor : 3 is working
+185s : Monitor : 3 is working
+186s : Monitor : 3 is working
+187s : Monitor : 3 is working
+188s : Monitor : 3 is working
+189s : Monitor : 3 is working
+190s : Monitor : 3 is working
+191s : Monitor : 3 is working
+192s : Monitor : 3 is working
+193s : Process 3 is waiting
+193s : Monitor : ready queue list : 3, 
+196s : Monitor : 3 loaded on cpu
+196s : Monitor : 3 is working
+197s : Monitor : 3 is working
+198s : Monitor : 3 is working
+199s : Monitor : 3 is working
+200s : Monitor : 3 is working
+201s : Monitor : 3 finished
+exit process
+round_robin end
+Process_ 3 Terminated
+Process_ 3 Waiting Time : 109
+Process_ 3 Turnaround Time : 199
+Process_ 3 Response Time : 72
+
+Result
+Execution Time: 204
+
+Average Response Time: 37.00
+Average Waiting Time: 78.50
+Average Turnaround Time: 132.50
+
+free memory

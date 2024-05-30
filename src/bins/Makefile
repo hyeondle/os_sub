@@ -36,8 +36,8 @@ fclean	:	clean
 			rm -f $(NAME)
 
 re		:
-			fclean
-			all
+			make fclean
+			make all
 
 .PHONY	:	all clean fclean re
 

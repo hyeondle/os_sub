@@ -4,6 +4,8 @@ JAVAC	=	javac
 SOURCE	=	ProcessSchedulerGUI.java\
 			ProcessInfo.java\
 			GanttChart.java\
+			InitInfo.java\
+			ResultInfo.java\
 
 CLASSES	=	$(SOURCE:.java=.class)
 
@@ -24,8 +26,15 @@ run	:	all
 scheduler :
 		$(MAKE) -C bins CONTEXT_SWITCH=$(CONTEXT_SWITCH) QUANTUM=$(QUANTUM) RQ_SIZE=$(RQ_SIZE)
 
+clean_scheduler :
+		$(MAKE) -C bins clean
+
 clean	:
 		rm -f *.class
 		$(MAKE) -C bins fclean
+
+re	:
+		make clean
+		make all
 
 .PHONY	: all run clean
